@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Settings\EpgSetting;
+use Illuminate\Support\Str;
 
 class EpgSettingsSeeder extends InitialDataSeeder
 {
@@ -13,9 +14,9 @@ class EpgSettingsSeeder extends InitialDataSeeder
             $c = new EpgSetting();
         }
         $c->name = $item['name'];
-        $c->prefix = $item['name'];
+        $c->prefix = strtolower(Str::before($item['name'], '-'));
         $c->url = $item['url'];
-        $c->refresh_period = $item['refresh_period'];
+        $c->refresh_period = 1440;
         $c->save();
     }
 

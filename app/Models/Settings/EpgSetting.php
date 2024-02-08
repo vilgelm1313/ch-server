@@ -45,9 +45,4 @@ class EpgSetting extends BaseModel
         'processing' => 'boolean',
         'has_error' => 'boolean',
     ];
-
-    public function url(): Attribute
-    {
-        return new Attribute(fn () => 'https://epg.it999.ru/epg.xml');
-    }
 }

@@ -44,8 +44,8 @@ class EpgParserService
 
     protected function parseProgramme(XMLReader $reader): void
     {
-        $start = Carbon::parse($reader->getAttribute('start'));
-        $stop = Carbon::parse($reader->getAttribute('stop'));
+        $start = Carbon::parse($reader->getAttribute('start'))->utc();
+        $stop = Carbon::parse($reader->getAttribute('stop'))->utc();
 
         $now = Carbon::now();
         $inTwoWeeks = Carbon::now()->addDays(15);
