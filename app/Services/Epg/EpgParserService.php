@@ -23,7 +23,9 @@ class EpgParserService
     public function parse()
     {
         $reader = new XMLReader();
-        $reader->open($this->epgSetting->url);
+        //$reader->open($this->epgSetting->url);
+
+        $reader->open(storage_path('app/xml/epg.xml'));
 
         while ($reader->read()) {
 
@@ -84,6 +86,9 @@ class EpgParserService
         }
 
         foreach ($languages as $language => $item) {
+            if (empty($item['title'])) {
+                continue;
+            }
             $channel = $this->channels[$reader->getAttribute('channel')];
             Epg::where('start', '>=', $start)
                 ->where('end', '<=', $stop)
@@ -137,7 +142,7 @@ class EpgParserService
     protected function getLanguage(SimpleXMLElement $simpleXMLElement): string
     {
         $language = 'xxx';
-        if ((string) $simpleXMLElement->attributes()->lang !== null) {
+        if ((string) $simpleXMLElement->attributes()->lang !== null && $simpleXMLElement->attributes()->lang) {
             $language = (string) $simpleXMLElement->attributes()->lang;
         }
 
