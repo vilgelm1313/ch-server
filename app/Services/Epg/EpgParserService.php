@@ -23,9 +23,7 @@ class EpgParserService
     public function parse()
     {
         $reader = new XMLReader();
-        //$reader->open($this->epgSetting->url);
-
-        $reader->open(storage_path('app/xml/epg.xml'));
+        $reader->open($this->epgSetting->url);
 
         while ($reader->read()) {
 
