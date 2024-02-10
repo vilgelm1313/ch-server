@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -65,6 +66,9 @@ class Handler extends ExceptionHandler
             $message = 'Unauthorized';
             $code = 403;
         } elseif ($e instanceof AuthenticationException) {
+            $message = 'Unauthenticated';
+            $code = 401;
+        } elseif ($e instanceof TokenMismatchException) {
             $message = 'Unauthenticated';
             $code = 401;
         } elseif ($e instanceof BusinessException) {

@@ -3,6 +3,10 @@
 namespace App\Models\Channels;
 
 use App\Models\BaseModel;
+use App\Models\Settings\Category;
+use App\Models\Settings\Country;
+use App\Models\Settings\Server;
+use App\Models\Settings\Tariff;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -29,6 +33,22 @@ class Channel extends BaseModel
 {
     use HasFactory;
 
+    public const FILTERS = [
+        'name' => [
+            'type' => 'string',
+        ],
+        'category_name' => [
+            'type' => 'string',
+            'relationship' => 'category',
+            'field' => 'name',
+        ],
+        'tariff_name' => [
+            'type' => 'string',
+            'relationship' => 'category',
+            'field' => 'name',
+        ],
+    ];
+
     protected $fillable = [
         'name',
         'comment',
@@ -47,4 +67,34 @@ class Channel extends BaseModel
         'is_active',
         'is_external',
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'year' => 'string',
+        'is_hevc' => 'boolean',
+        'is_external' => 'boolean',
+        'is_test' => 'boolean',
+    ];
+
+    public function servers()
+    {
+        return $this->belongsToMany(Server::class, 'channel_server')
+            ->withPivot('synced_at')
+            ->as('synced');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function tariff()
+    {
+        return $this->belongsTo(Tariff::class);
+    }
 }
