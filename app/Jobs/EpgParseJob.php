@@ -16,7 +16,7 @@ class EpgParseJob implements ShouldQueue
 
     public function __construct(protected EpgSetting $epgSetting)
     {
-        //$this->onQueue('')
+        $this->onQueue('worker');
     }
 
     /**
