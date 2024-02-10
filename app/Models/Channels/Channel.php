@@ -37,6 +37,9 @@ class Channel extends BaseModel
         'name' => [
             'type' => 'string',
         ],
+        'epg_key' => [
+            'type' => 'string',
+        ],
         'category_name' => [
             'type' => 'string',
             'relationship' => 'category',
