@@ -33,7 +33,8 @@ class EpgService
 
             $parser = new EpgParserService($epgSetting);
             $parser->parse();
-
+            $epgSetting->has_error = false;
+            $epgSetting->error = null;
             $this->log('finish', $epgSetting);
 
         } catch (\Exception $e) {
