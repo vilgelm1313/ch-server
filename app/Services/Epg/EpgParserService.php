@@ -116,16 +116,16 @@ class EpgParserService
         $channel = Channel::where('epg_key', $epgKey)->first();
 
         if (!$channel) {
-            $logo = (string) $xml->icon->attributes()->src;
-            $file = file_get_contents($logo);
-            $fileName = Storage::putFile('channels-logo', $file);
+            // $logo = (string) $xml->icon->attributes()->src;
+            // $file = file_get_contents($logo);
+            // $fileName = Storage::putFile('channels-logo', $file);
 
             $channel = new Channel();
             $channel->name = $channelName;
             $channel->epg_key = $epgKey;
             $channel->index = 9999;
             $channel->is_active = false;
-            $channel->logo = '/file/get?path=' . $fileName;
+           // $channel->logo = '/file/get?path=' . $fileName;
             $channel->save();
 
             $this->logger->database([
