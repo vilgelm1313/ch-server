@@ -19,4 +19,9 @@ class EpgRepository extends BaseRepository
             'epgSetting',
         ];
     }
+
+    public function getDefaultOrderColumn(): string
+    {
+        return 'start';
+    }
 }
