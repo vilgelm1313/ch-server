@@ -32,6 +32,7 @@ class Channel extends BaseModel
     protected $fillable = [
         'name',
         'comment',
+        'epg_key',
         'logo',
         'category_id',
         'country_id',
