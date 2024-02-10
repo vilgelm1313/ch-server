@@ -2,6 +2,7 @@
 
 namespace App\Services\Epg;
 
+use App\Models\EPG\Epg;
 use App\Models\Settings\EpgSetting;
 use App\Services\Log\LoggerService;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,7 +31,9 @@ class EpgService
             $epgSetting->processing = true;
             $epgSetting->save();
             $this->log('start', $epgSetting);
-
+            Epg::where('epg_setting_id', $epgSetting->id)
+                ->whereDate('end', '<=', now())
+                ->delete();
             $parser = new EpgParserService($epgSetting);
             $parser->parse();
             $epgSetting->has_error = false;
