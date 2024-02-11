@@ -12,7 +12,7 @@ class FileController extends ApiController
     {
         $this->validate($request, [
             'file' => 'required|file|image',
-            'type' => 'required|string|in:video-file|channle-logo',
+            'type' => 'required|string|in:video-file,channle-logo',
         ]);
 
         $fileName = Storage::putFile($request->type, $request->file('file'));
