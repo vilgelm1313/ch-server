@@ -16,7 +16,7 @@ class VideoFileRequest extends BaseRequest
             'kinopoisk_url' => 'nullable|string|max:255',
             'imbd' => 'nullable|numeric',
             'kinopoisk' => 'nullable|numeric',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'is_active' => 'required|boolean',
             'show_start' => 'required|date_format:Y-m-d',
             'show_end' => 'required|date_format:Y-m-d',

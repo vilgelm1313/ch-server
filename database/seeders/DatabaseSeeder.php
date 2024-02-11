@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TariffsSeeder::class);
         $this->call(ConfigurationSeeder::class);
         $this->call(VideoFilesSeeder::class);
+        $this->call(ChannelsSeeder::class);
+        $this->call(ExternalChannelSeeder::class);
     }
 }

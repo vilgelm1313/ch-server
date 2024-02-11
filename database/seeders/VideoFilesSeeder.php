@@ -36,7 +36,11 @@ class VideoFilesSeeder extends InitialDataSeeder
         $info = explode('.', $info[$key]);
         $v->year = trim($info[0]);
         $v->country = trim($info[1]);
+        if (empty($info[2])) {
+            dd($ruTitle);
+        }
         $v->genres = trim($info[2]);
+
         $v->director = str_replace('Режиссер: ', '', trim($info[3]));
         $v->actors = str_replace('В ролях: ', '', trim($info[4]));
 
