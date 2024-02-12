@@ -125,16 +125,12 @@ class EpgParserService
             }
         }
         if (!$channel) {
-            // $logo = (string) $xml->icon->attributes()->src;
-            // $file = file_get_contents($logo);
-            // $fileName = Storage::putFile('channels-logo', $file);
-
+            
             $channel = new Channel();
             $channel->name = $channelName;
             $channel->epg_key = $epgKey;
             $channel->index = 9999;
             $channel->is_active = false;
-           // $channel->logo = '/file/get?path=' . $fileName;
             $channel->save();
 
             $this->logger->database([
@@ -142,6 +138,24 @@ class EpgParserService
                 'action' => 'channel',
                 'value' => $channel->toArray(),
             ]);
+        }
+
+        if (!$channel->logo) {
+            try {
+                $logo = (string) $xml->icon->attributes()->src;
+                $file = file_get_contents($logo);
+                $fileName = Storage::putFile('channels-logo', $file);
+                $channel->logo = '/file/get?path=' . $fileName;
+                $channel->logo();
+
+                $this->logger->database([
+                    'type' => 'epg',
+                    'action' => 'channel',
+                    'value' => $channel->logo,
+                ]);
+            } catch (\Throwable $th) {
+
+            }
         }
 
         return $channel;
