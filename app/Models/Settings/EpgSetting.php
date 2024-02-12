@@ -39,6 +39,7 @@ class EpgSetting extends BaseModel
         'url',
         'is_active',
         'refresh_period',
+        'prefix',
     ];
     protected $casts = [
         'is_active' => 'boolean',

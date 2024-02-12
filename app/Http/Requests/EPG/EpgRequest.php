@@ -15,8 +15,7 @@ class EpgRequest extends BaseRequest
             'title' => 'required|string|max:255',
             'sub_title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'lang' => 'nullable|string|max:255',
-            'event' => 'nullable|string|max:255',
+            'language' => 'nullable|string|max:255',
         ];
 
         return $rules;

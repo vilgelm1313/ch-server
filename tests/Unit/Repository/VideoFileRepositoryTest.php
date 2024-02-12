@@ -27,7 +27,7 @@ class VideoFileRepositoryTest extends BaseRepository
             'year' => 2023,
             'country' => 'counrty',
             'director' => 'director',
-            'roles' => 'roles',
+            'actors' => 'actores',
         ];
     }
 }

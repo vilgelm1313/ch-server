@@ -17,6 +17,7 @@ class EpgSettingRepositoryTest extends BaseRepository
             'url' => 'url',
             'is_active' => false,
             'refresh_period' => 1,
+            'prefix' => 'prefix',
         ];
     }
 }

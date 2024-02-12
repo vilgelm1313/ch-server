@@ -23,7 +23,7 @@ class VideoFileFactory extends Factory
             'year' => 2023,
             'country' => fake()->title(),
             'director' => fake()->title(),
-            'roles' => fake()->title(),
+            'actors' => fake()->title(),
         ];
     }
 }

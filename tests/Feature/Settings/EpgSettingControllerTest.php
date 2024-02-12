@@ -16,6 +16,7 @@ class EpgSettingControllerTest extends BaseController
             'name' => 'test',
             'url' => 'test',
             'is_active' => true,
+            'prefix' => 'test',
             'refresh_period' => 10,
         ];
     }

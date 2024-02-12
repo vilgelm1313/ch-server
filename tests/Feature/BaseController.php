@@ -26,9 +26,11 @@ abstract class BaseController extends TestCase
     {
         $this->model::factory()->count(10)->create();
 
+        $count = $this->model::count();
+
         $this->getJson($this->path)
             ->assertStatus(200)
-            ->assertJsonCount(10, 'data.data');
+            ->assertJsonCount($count, 'data.data');
     }
 
     public function testStore()

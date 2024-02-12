@@ -45,6 +45,7 @@ class Epg extends BaseModel
         'sub_title',
         'description',
         'language',
+        'epg_setting_id',
     ];
 
     public function channel()

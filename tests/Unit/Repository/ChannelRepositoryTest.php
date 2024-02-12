@@ -18,7 +18,7 @@ class ChannelRepositoryTest extends BaseRepository
             'logo' => 'logo',
             'category_id' => 1,
             'country_id' => 1,
-            'epg_id' => 1,
+            'epg_key' => 'test',
             'smartiptv' => 'smartiptv',
             'ssiptv' => 'ssiptv',
             'index' => 1,
