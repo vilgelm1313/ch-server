@@ -11,4 +11,9 @@ class CountryRepository extends BaseRepository
     {
         return Country::class;
     }
+
+    public function getWith(): array
+    {
+        return ['servers'];
+    }
 }

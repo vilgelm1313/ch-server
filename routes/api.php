@@ -31,14 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout']);
     Route::get('/history', [HistoryController::class, 'index']);
     Route::get('/epg', [EpgController::class, 'index']);
-    Route::apiResource('category', CategoryController::class);
     Route::apiResource('configuration', ConfigurationController::class);
-    //Route::apiResource('epg', EpgControlle::class);
-    Route::apiResource('channel', ChannelController::class);
-    Route::apiResource('video-file', VideoFileController::class);
     Route::post('file/upload', [FileController::class, 'upload']);
     Route::get('file/get', [FileController::class, 'getImage']);
-
     Route::post('epgsetting/{epg}/parse', [EpgSettingController::class, 'parse']);
 
     $activation = [
@@ -48,12 +43,17 @@ Route::middleware('auth:sanctum')->group(function () {
         'tariff' => TariffController::class,
         'country' => CountryController::class,
         'videofile' => VideoFileController::class,
+        'channel' => ChannelController::class,
+        'category' => CategoryController::class,
     ];
 
     Route::get('/videofile/kinopoisk/info', [VideoFileController::class, 'getMovieInfoFromKinopoisk']);
     foreach ($activation as $key => $value) {
+        Route::get("{$key}/all", [$value, 'all']);
         Route::apiResource($key, $value);
         Route::post("{$key}/{{$key}}/activate", [$value, 'activate']);
         Route::post("{$key}/{{$key}}/deactivate", [$value, 'deactivate']);
     }
+
+    Route::post('/server/{server}/sync', [ServerController::class,'addRelations']);
 });

@@ -27,4 +27,12 @@ class VideoFileRepository extends BaseRepository
     {
         return $this->syncServers($model, $data);
     }
+
+    public function all()
+    {
+        return $this->getQuery()
+            ->where('is_active', true)
+            ->orderBy('title')
+            ->get();
+    }
 }

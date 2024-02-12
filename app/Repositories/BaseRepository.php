@@ -21,6 +21,14 @@ abstract class BaseRepository
         return $model;
     }
 
+    public function all()
+    {
+        return $this->getQuery()
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+    }
+
     public function index(?int $perPage = 100, ?array $filters = []): LengthAwarePaginator
     {
         /**
@@ -89,7 +97,7 @@ abstract class BaseRepository
         return $deleted;
     }
 
-    private function getQuery(): Builder
+    protected function getQuery(): Builder
     {
         return $this->getClass()::query();
     }

@@ -114,7 +114,11 @@ class EpgParserService
         $channelName = [(string) $xml->{'display-name'}][0];
         $epgKey = $this->epgSetting->prefix . '_' . $this->getEpgKey($channelName);
         $channel = Channel::where('epg_key', $epgKey)->first();
-
+        if (!$channel) {
+            $channel = Channel::where('name', trim($channelName))
+                ->where('is_external', false)
+                ->first();
+        }
         if (!$channel) {
             // $logo = (string) $xml->icon->attributes()->src;
             // $file = file_get_contents($logo);

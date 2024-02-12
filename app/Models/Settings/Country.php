@@ -35,4 +35,11 @@ class Country extends BaseModel
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function servers()
+    {
+        return $this->belongsToMany(Server::class, 'country_server')
+            ->withPivot('synced_at')
+            ->as('synced');
+    }
 }
