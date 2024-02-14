@@ -29,12 +29,7 @@ class ChannelRepository extends BaseRepository
     {
         $model = $this->syncServers($model, $data);
 
-        $ids = $data['categories'] ?? [];
-        $ids = array_map(function ($category) {
-            return $category['id'];
-        }, $ids);
-
-        $model->categories()->sync($ids);
+        $model->categories()->sync($data['categories'] ?? []);
         $model->load('categories');
 
         return $model;
