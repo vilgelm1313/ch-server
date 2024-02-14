@@ -17,19 +17,20 @@ class ChannelsSeeder extends InitialDataSeeder
             $c->id = $item['id'];
         }
         $c->name = $item['name'];
-        $c->index = $item['corder'];
         $c->epg_key = $item['epg'];
-        $c->category_id = $item['packet'] + 1;
         $c->dvr = (int) $item['dvr'];
         $c->smartiptv = $item['smartiptv'];
-        $c->ssiptv = $item['ssiptv'];
-        $c->is_test = (int) $item['test'];
-        $c->is_hevc = (int) $item['hevc'];
         $c->is_active = true;
-        $c->tariff_id = $item['level'] + 1;
         $c->logo = 'https://plati.one/logo/' . $item['logo'];
 
         $c->save();
+
+        $c->categories()->syncWithPivotValues(
+            [$item['packet']],
+            [
+                'index' => $item['corder']
+            ]
+        );
     }
 
     public function getFileName(): string
