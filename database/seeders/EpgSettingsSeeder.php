@@ -14,7 +14,7 @@ class EpgSettingsSeeder extends InitialDataSeeder
             $c = new EpgSetting();
         }
         $c->name = $item['name'];
-        $c->prefix = strtolower(Str::before($item['name'], '-'));
+        $c->prefix = Str::before($item['name'], '-');
         $c->url = $item['url'];
         $c->refresh_period = 1440;
         $c->save();

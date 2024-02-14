@@ -10,6 +10,7 @@ use App\Repositories\Traits\SyncServers;
 class ChannelRepository extends BaseRepository
 {
     use SyncServers;
+
     protected function getClass(): string
     {
         return Channel::class;
@@ -19,9 +20,8 @@ class ChannelRepository extends BaseRepository
     {
         return [
             'servers',
-            'tariff',
             'country',
-            'category',
+            'categories',
         ];
     }
 

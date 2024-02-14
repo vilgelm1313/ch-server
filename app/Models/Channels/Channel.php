@@ -6,7 +6,6 @@ use App\Models\BaseModel;
 use App\Models\Settings\Category;
 use App\Models\Settings\Country;
 use App\Models\Settings\Server;
-use App\Models\Settings\Tariff;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -55,28 +54,17 @@ class Channel extends BaseModel
     protected $fillable = [
         'name',
         'comment',
-        'epg_key',
         'logo',
-        'category_id',
         'country_id',
         'smartiptv',
-        'ssiptv',
-        'index',
-        'tariff_id',
-        'is_test',
         'url',
         'dvr',
-        'is_hevc',
         'is_active',
         'is_external',
     ];
-
     protected $casts = [
         'is_active' => 'boolean',
-        'year' => 'string',
-        'is_hevc' => 'boolean',
         'is_external' => 'boolean',
-        'is_test' => 'boolean',
     ];
 
     public function servers()
@@ -86,18 +74,14 @@ class Channel extends BaseModel
             ->as('synced');
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'category_channel')
+            ->withPivot('index');
     }
 
     public function country()
     {
         return $this->belongsTo(Country::class);
-    }
-
-    public function tariff()
-    {
-        return $this->belongsTo(Tariff::class);
     }
 }

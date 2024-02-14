@@ -13,7 +13,7 @@ class EpgSettingFactory extends Factory
             'url' => fake()->title(),
             'is_active' => true,
             'refresh_period' => 1,
-            'prefix' => 'test'
+            'prefix' => 'test',
         ];
     }
 }

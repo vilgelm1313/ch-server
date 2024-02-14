@@ -125,7 +125,7 @@ class EpgParserService
             }
         }
         if (!$channel) {
-            
+
             $channel = new Channel();
             $channel->name = $channelName;
             $channel->epg_key = $epgKey;

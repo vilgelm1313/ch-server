@@ -10,7 +10,6 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'parent_id' => null,
             'is_active' => true,
         ];
     }

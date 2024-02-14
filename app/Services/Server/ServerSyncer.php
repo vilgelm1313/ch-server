@@ -88,7 +88,6 @@ class ServerSyncer
         $this->syncWithAllServers('external', 'channels', $syncingData);
     }
 
-
     public function syncChannels()
     {
         $external = Channel::where('is_external', false)
@@ -129,7 +128,6 @@ class ServerSyncer
         }
     }
 
-
     public function sync(Server $server, string $type, string $name, mixed $data)
     {
         if ($data == 'delete') {
@@ -145,49 +143,46 @@ class ServerSyncer
         $send = http_build_query($send);
         $options = [
             'http' => [
-                'header'=>"Content-type: application/x-www-form-urlencoded\r\nContent-Length: " . strlen($send)."\r\n",
-                'method'=>'POST',
-                'content' => $send
+                'header' => "Content-type: application/x-www-form-urlencoded\r\nContent-Length: " . strlen($send) . "\r\n",
+                'method' => 'POST',
+                'content' => $send,
             ],
         ];
         //$result = file_get_contents($server->address, false, stream_context_create($options));
-        if ($result === FALSE) {
-        //not synced
+        if ($result === false) {
+            //not synced
         } else {
-        // $_SESSION['message'][1][]= date('Y-m-d H:i:s').' | '.$item['name'].' | Sended <b>'.$type.' : '.$name.' ('.count($data).')</b>.';
-        // $_SESSION['message'][1][]=$result;
+            // $_SESSION['message'][1][]= date('Y-m-d H:i:s').' | '.$item['name'].' | Sended <b>'.$type.' : '.$name.' ('.count($data).')</b>.';
+            // $_SESSION['message'][1][]=$result;
         }
         unset($result);
     }
 
-
-
-
     // if (isset($_GET['filename']) && isset($files) && isset($files[$_GET['filename']]) && isset($_POST['post_file_sub']) && $_POST['title']!='' && $_POST['sub-title']!='' && $_POST['description']!='') { // Публикация
-	// 	$tmp=strtotime('+1 month');
-	// 	$tmp_time=time();
-	// 	if ($sql->query("UPDATE `billing_files` SET `time-to-die`='".$tmp."' WHERE `filename`='".strip_tags($_GET['filename'])."'")) {
-	// 		$_SESSION['message'][1][]=date('Y-m-d H:i:s').' | Admin. <b>'.strip_tags($_GET['filename']).'</b>: <i>Time to die</i> успешно обновлено.';
-	// 		$sql->query("INSERT INTO `billing_history` SET `login`='".$_SESSION['email']."', `time`='".time()."', `notice`='Admin. Public <b>".strip_tags($_GET['filename'])."</b>.', `ip`='".$client_ip_address."'");
-	// 	}
-	// 	$data=$files[strip_tags($_GET['filename'])];
-	// 	$data['time-to-die']=$tmp;
-	// 	SyncWithServer('file', $_GET['filename'], $data);
-	// 	$sql1->query("DELETE FROM `dbs_epg` WHERE `channel`='".strip_tags($_GET['filename'])."'");
-	// 	$sql1->query("DELETE FROM `dbs_channels` WHERE `epg`='".strip_tags($_GET['filename'])."'");
-	// 	$sql1->query("INSERT INTO `dbs_channels` SET `epg`='".strip_tags($_GET['filename'])."', `type`='vod', `dvr`='0'");
-	// 	for ($i=$tmp_time; $i<$tmp; $i=$i+86400) {
-	// 		$sql1->query("INSERT INTO `dbs_epg` SET `channel`='".strip_tags($_GET['filename'])."', `start`='".$i."', `stop`='".($i+86400)."', `title`='".htmlentities(trim(preg_replace('/\s+/', ' ', $_POST['title'])), ENT_QUOTES|ENT_HTML401, "UTF-8", TRUE)."', `subtitle`='".htmlentities(trim(preg_replace('/\s+/', ' ', $_POST['sub-title'])), ENT_QUOTES|ENT_HTML401, "UTF-8", TRUE)."', `desc`='".htmlentities(trim(preg_replace('/\s+/', ' ', $_POST['description'])), ENT_QUOTES|ENT_HTML401, "UTF-8", TRUE)."', `lang`='ru'");
-	// 	}
-	// 	header('Location: vod.php?filename='.strip_tags($_GET['filename']), true, 303); exit;
-	// }
-	// if (isset($_GET['filename']) && isset($files) && isset($files[$_GET['filename']]) && isset($_POST['delete_file_sub'])) { // Удаление
-	// 	$sql->query("DELETE FROM `billing_files` WHERE `filename`='".strip_tags($_GET['filename'])."'");
-	// 	if ($sql->affected_rows==1) {
-	// 		$_SESSION['message'][1][]=date('Y-m-d H:i:s').' | Admin. <b>'.strip_tags($_GET['filename']).'</b>: успешно удален.';
-	// 		$sql->query("INSERT INTO `billing_history` SET `login`='".$_SESSION['email']."', `time`='".time()."', `notice`='Admin. Delete <b>".strip_tags($_GET['filename'])."</b>.', `ip`='".$client_ip_address."'");
-	// 	}
-	// 	SyncWithServer('file', $_GET['filename'], 'delete');
-	// 	header('Location: vod.php', true, 303); exit;
-	// }
+    // 	$tmp=strtotime('+1 month');
+    // 	$tmp_time=time();
+    // 	if ($sql->query("UPDATE `billing_files` SET `time-to-die`='".$tmp."' WHERE `filename`='".strip_tags($_GET['filename'])."'")) {
+    // 		$_SESSION['message'][1][]=date('Y-m-d H:i:s').' | Admin. <b>'.strip_tags($_GET['filename']).'</b>: <i>Time to die</i> успешно обновлено.';
+    // 		$sql->query("INSERT INTO `billing_history` SET `login`='".$_SESSION['email']."', `time`='".time()."', `notice`='Admin. Public <b>".strip_tags($_GET['filename'])."</b>.', `ip`='".$client_ip_address."'");
+    // 	}
+    // 	$data=$files[strip_tags($_GET['filename'])];
+    // 	$data['time-to-die']=$tmp;
+    // 	SyncWithServer('file', $_GET['filename'], $data);
+    // 	$sql1->query("DELETE FROM `dbs_epg` WHERE `channel`='".strip_tags($_GET['filename'])."'");
+    // 	$sql1->query("DELETE FROM `dbs_channels` WHERE `epg`='".strip_tags($_GET['filename'])."'");
+    // 	$sql1->query("INSERT INTO `dbs_channels` SET `epg`='".strip_tags($_GET['filename'])."', `type`='vod', `dvr`='0'");
+    // 	for ($i=$tmp_time; $i<$tmp; $i=$i+86400) {
+    // 		$sql1->query("INSERT INTO `dbs_epg` SET `channel`='".strip_tags($_GET['filename'])."', `start`='".$i."', `stop`='".($i+86400)."', `title`='".htmlentities(trim(preg_replace('/\s+/', ' ', $_POST['title'])), ENT_QUOTES|ENT_HTML401, "UTF-8", TRUE)."', `subtitle`='".htmlentities(trim(preg_replace('/\s+/', ' ', $_POST['sub-title'])), ENT_QUOTES|ENT_HTML401, "UTF-8", TRUE)."', `desc`='".htmlentities(trim(preg_replace('/\s+/', ' ', $_POST['description'])), ENT_QUOTES|ENT_HTML401, "UTF-8", TRUE)."', `lang`='ru'");
+    // 	}
+    // 	header('Location: vod.php?filename='.strip_tags($_GET['filename']), true, 303); exit;
+    // }
+    // if (isset($_GET['filename']) && isset($files) && isset($files[$_GET['filename']]) && isset($_POST['delete_file_sub'])) { // Удаление
+    // 	$sql->query("DELETE FROM `billing_files` WHERE `filename`='".strip_tags($_GET['filename'])."'");
+    // 	if ($sql->affected_rows==1) {
+    // 		$_SESSION['message'][1][]=date('Y-m-d H:i:s').' | Admin. <b>'.strip_tags($_GET['filename']).'</b>: успешно удален.';
+    // 		$sql->query("INSERT INTO `billing_history` SET `login`='".$_SESSION['email']."', `time`='".time()."', `notice`='Admin. Delete <b>".strip_tags($_GET['filename'])."</b>.', `ip`='".$client_ip_address."'");
+    // 	}
+    // 	SyncWithServer('file', $_GET['filename'], 'delete');
+    // 	header('Location: vod.php', true, 303); exit;
+    // }
 }

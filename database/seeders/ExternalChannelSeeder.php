@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Channels\Channel;
-use App\Models\Settings\Category;
 
 class ExternalChannelSeeder extends InitialDataSeeder
 {
@@ -31,7 +30,7 @@ class ExternalChannelSeeder extends InitialDataSeeder
         $c->tariff_id = (int) $item['level'] + 1;
         $c->url = $item['url'];
         $c->logo = 'https://plati.one/logo/' . $item['logo'];
-        
+
         $c->save();
     }
 

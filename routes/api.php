@@ -10,7 +10,6 @@ use App\Http\Controllers\Api\Settings\ConfigurationController;
 use App\Http\Controllers\Api\Settings\CountryController;
 use App\Http\Controllers\Api\Settings\EpgSettingController;
 use App\Http\Controllers\Api\Settings\ServerController;
-use App\Http\Controllers\Api\Settings\TariffController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\VideoFiles\VideoFileController;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
         'user' => UserController::class,
         'server' => ServerController::class,
         'epgsetting' => EpgSettingController::class,
-        'tariff' => TariffController::class,
         'country' => CountryController::class,
         'videofile' => VideoFileController::class,
         'channel' => ChannelController::class,
@@ -55,5 +53,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post("{$key}/{{$key}}/deactivate", [$value, 'deactivate']);
     }
 
-    Route::post('/server/{server}/sync', [ServerController::class,'addRelations']);
+    Route::post('/server/{server}/sync', [ServerController::class, 'addRelations']);
 });

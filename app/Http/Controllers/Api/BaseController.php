@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 abstract class BaseController extends ApiController
 {
-
     public function all()
     {
         return $this->success($this->getRepository()->all());

@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Channels\Channel;
-use App\Models\Settings\Category;
-use App\Models\Settings\Tariff;
 
 class ChannelsSeeder extends InitialDataSeeder
 {
@@ -30,7 +28,7 @@ class ChannelsSeeder extends InitialDataSeeder
         $c->is_active = true;
         $c->tariff_id = $item['level'] + 1;
         $c->logo = 'https://plati.one/logo/' . $item['logo'];
-        
+
         $c->save();
     }
 

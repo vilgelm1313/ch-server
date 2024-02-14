@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesSeeder::class);
         $this->call(ServersSeeder::class);
         $this->call(EpgSettingsSeeder::class);
-        $this->call(TariffsSeeder::class);
         $this->call(ConfigurationSeeder::class);
         $this->call(VideoFilesSeeder::class);
         $this->call(ChannelsSeeder::class);

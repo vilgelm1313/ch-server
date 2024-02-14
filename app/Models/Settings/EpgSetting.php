@@ -3,7 +3,6 @@
 namespace App\Models\Settings;
 
 use App\Models\BaseModel;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**

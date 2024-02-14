@@ -47,13 +47,6 @@ class Server extends BaseModel
             ->as('synced');
     }
 
-    public function tariffs()
-    {
-        return $this->belongsToMany(Tariff::class, 'server_tariff')
-            ->withPivot('synced_at')
-            ->as('synced');
-    }
-
     public function countries()
     {
         return $this->belongsToMany(Country::class, 'country_server')

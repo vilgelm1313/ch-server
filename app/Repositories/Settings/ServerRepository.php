@@ -19,9 +19,8 @@ class ServerRepository extends BaseRepository
         $server->load([
             'channels',
             'countries',
-            'tariffs',
             'categories',
-            'videoFiles'
+            'videoFiles',
         ]);
 
         return $server;

@@ -19,8 +19,8 @@ class CategoryRepository extends BaseRepository
     protected function getWith(): array
     {
         return [
-            'parent',
             'servers',
+            'channels',
         ];
     }
 

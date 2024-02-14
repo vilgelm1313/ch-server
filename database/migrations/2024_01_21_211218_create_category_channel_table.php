@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('channel_tariff', function (Blueprint $table) {
+        Schema::create('category_channel', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tariff_id');
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('channel_id');
+            $table->integer('index')->nullable()->default(9999);
             $table->timestamps();
 
-            $table->foreign('tariff_id')
+            $table->foreign('category_id')
                 ->references('id')
-                ->on('tariffs')
+                ->on('categories')
                 ->onDelete('cascade');
 
             $table->foreign('channel_id')
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('channel_tariff');
+        Schema::dropIfExists('category_channel');
     }
 };

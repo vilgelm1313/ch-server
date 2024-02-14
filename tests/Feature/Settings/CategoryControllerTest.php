@@ -14,7 +14,6 @@ class CategoryControllerTest extends BaseController
     {
         return [
             'name' => 'test',
-            'parent_id' => null,
             'is_active' => false,
             'index' => 1,
         ];

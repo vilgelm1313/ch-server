@@ -3,6 +3,7 @@
 namespace App\Models\Settings;
 
 use App\Models\BaseModel;
+use App\Models\Channels\Channel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -27,7 +28,6 @@ class Category extends BaseModel
     protected $fillable = [
         'name',
         'index',
-        'parent_id',
         'is_active',
         'is_parental_control',
     ];
@@ -36,15 +36,16 @@ class Category extends BaseModel
         'is_parental_control' => 'boolean',
     ];
 
-    public function parent()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function servers()
     {
         return $this->belongsToMany(Server::class, 'category_server')
             ->withPivot('synced_at')
             ->as('synced');
+    }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class, 'category_channel')
+            ->withPivot('index');
     }
 }
