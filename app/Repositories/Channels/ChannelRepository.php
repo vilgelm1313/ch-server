@@ -27,6 +27,16 @@ class ChannelRepository extends BaseRepository
 
     protected function afterSave(BaseModel $model, array $data): BaseModel
     {
-        return $this->syncServers($model, $data);
+        $model = $this->syncServers($model, $data);
+
+        $ids = $data['categories'] ?? [];
+        $ids = array_map(function ($category) {
+            return $category['id'];
+        }, $ids);
+
+        $model->categories()->sync($ids);
+        $model->load('categories');
+
+        return $model;
     }
 }
