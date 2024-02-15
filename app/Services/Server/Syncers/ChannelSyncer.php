@@ -27,7 +27,7 @@ class ChannelSyncer implements ServerSyncerContract
                     'epg' => $channel->epg_key,
                     'packet' => $category->id,
                     'smartiptv' => $channel->smartiptv,
-                    'logo' => $channel->logo,
+                    'logo' => str_replace('https://plati.one/logo/', '', $channel->logo ?? ''),
                     'corder' => $category->pivot->index,
                     'dvr' => (int) $channel->dvr,
                 ];
