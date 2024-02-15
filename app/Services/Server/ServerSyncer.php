@@ -37,6 +37,7 @@ class ServerSyncer
 
     public function upload(Server $server, string $type, string $name, mixed $data)
     {
+        $server->address = null;
         if ($data == 'delete') {
             $send['data']['delete'] = $name;
             $send['count'] = 1;
@@ -60,13 +61,35 @@ class ServerSyncer
                 'content' => $send,
             ],
         ];
-        //$result = file_get_contents($server->address, false, stream_context_create($options));
-        // if ($result === false) {
-        //     //not synced
-        // } else {
-        //     // $_SESSION['message'][1][]= date('Y-m-d H:i:s').' | '.$item['name'].' | Sended <b>'.$type.' : '.$name.' ('.count($data).')</b>.';
-        //     // $_SESSION['message'][1][]=$result;
-        // }
+        $this->loggerService->database([
+            'type' => 'sync',
+            'action' => 'start',
+            'info' => [
+                'name' => $name,
+                'type' => $type,
+            ]
+        ]);
+        $result = null;
+        if ($result === false) {
+            $this->loggerService->database([
+                'type' => 'sync',
+                'action' => 'fail',
+                'info' => [
+                    'name' => $name,
+                    'type' => $type,
+                ]
+            ]);
+        } else {
+            $this->loggerService->database([
+                'type' => 'sync',
+                'action' => 'fail',
+                'info' => [
+                    'name' => $name,
+                    'type' => $type,
+                    'data' => $result
+                ]
+            ]);
+        }
         unset($result);
         
     }
