@@ -12,6 +12,9 @@ class EpgSettingController extends BaseController
 {
     public function parse(EpgSetting $epg)
     {
+        $epg->processing = true;
+        $epg->save();
+
         EpgParseJob::dispatch($epg);
 
         return $this->success();
