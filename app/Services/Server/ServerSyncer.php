@@ -21,7 +21,7 @@ class ServerSyncer
 
         $this->upload($server, $syncer->getType(), $syncer->getName(), $data);
 
-        if ($type === 'channels') {
+        if ($type === 'channel') {
             $syncer = app()->make(ExternalChannelSyncer::class);
             $this->upload($server, $syncer->getType(), $syncer->getName(), $data);
         }
@@ -67,16 +67,18 @@ class ServerSyncer
             'info' => [
                 'name' => $name,
                 'type' => $type,
+                'server' => $server->name,
             ]
         ]);
         $result = null;
-        if ($result === false) {
+        if (!$result === false) {
             $this->loggerService->database([
                 'type' => 'sync',
                 'action' => 'fail',
                 'info' => [
                     'name' => $name,
                     'type' => $type,
+                    'server' => $server->name,
                 ]
             ]);
         } else {
@@ -86,11 +88,10 @@ class ServerSyncer
                 'info' => [
                     'name' => $name,
                     'type' => $type,
-                    'data' => $result
+                    'data' => $result,
+                    'server' => $server->name,
                 ]
             ]);
         }
-        unset($result);
-        
     }
 }
