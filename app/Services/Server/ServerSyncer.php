@@ -23,6 +23,7 @@ class ServerSyncer
 
         if ($type === 'channel') {
             $syncer = app()->make(ExternalChannelSyncer::class);
+            $data = $syncer->getData($server);
             $this->upload($server, $syncer->getType(), $syncer->getName(), $data);
         }
     }
