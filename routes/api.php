@@ -58,5 +58,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/server/{server}/sync', [ServerController::class, 'sync']);
 
     Route::post('/category/{category}/channels', [CategoryController::class, 'setChannelsPositions']);
-    Route::post('/channel/{channel}/epg', [EpgController::class, 'channelEpg']);
+    Route::get('/channel/{channel}/epg', [EpgController::class, 'channelEpg']);
 });
