@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ServerController extends BaseController
 {
-    protected array $syncTypes = ['channel', 'category', 'country', 'videoFile'];
+    protected array $syncTypes = ['channel', 'category', 'country', 'videofile'];
     protected function getRepositoryClass(): string
     {
         return ServerRepository::class;
