@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ServerController extends BaseController
 {
-    protected array $syncTypes = ['channels', 'categories', 'countries', 'videoFiles'];
+    protected array $syncTypes = ['channel', 'category', 'country', 'videoFile'];
     protected function getRepositoryClass(): string
     {
         return ServerRepository::class;
@@ -25,7 +25,7 @@ class ServerController extends BaseController
     public function addRelations(Request $request, Server $server)
     {
         $this->validate($request, [
-            'relation' => 'required|in:channel,category,country,videoFile',
+            'relation' => 'required|in:channels,categories,countries,videoFiles',
             'ids' => 'array|required',
         ]);
 
