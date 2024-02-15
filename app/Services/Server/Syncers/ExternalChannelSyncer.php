@@ -14,12 +14,11 @@ class ExternalChannelSyncer implements ServerSyncerContract
             ->where('is_active', true)
             ->with('categories')
             ->get();
-
+        $index = 1;
         foreach ($channels as $channel) {
             foreach ($channel->categories as $category) {
-
                 $data[] = [
-                    'id' => $channel->id,
+                    'id' => $index++,
                     'name' => $channel->name,
                     'epg' => $channel->epg_key,
                     'packet' => $category->id,
