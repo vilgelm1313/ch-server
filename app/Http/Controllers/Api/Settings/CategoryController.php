@@ -29,7 +29,7 @@ class CategoryController extends BaseController
         $channels = $request->channels;
         $data = [];
         foreach ($channels as $channel) {
-            $data[$channel->id] = ['position' => $channel->pivot->position];
+            $data[$channel->id] = ['position' => $channel['pivot']['position']];
         }
 
         $category->channels()->sync($data);
