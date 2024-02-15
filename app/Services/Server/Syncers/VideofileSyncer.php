@@ -11,7 +11,9 @@ class VideofileSyncer implements ServerSyncerContract
 {
     public function getData(Server $server): array
     {
-        $files = $server->videoFiles()->where('is_active', true)->get();
+        $files = $server->videoFiles()->where('is_active', true)
+            ->orderBy('end', 'desc')
+            ->get();
 
         $data = [];
         /**
