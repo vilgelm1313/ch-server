@@ -144,8 +144,8 @@ class EpgParserService
             try {
                 $logo = (string) $xml->icon->attributes()->src;
                 $file = file_get_contents($logo);
-                $path = 'app/channel-logo/' . $epgKey. '.png';
-                $fileName = storage_path($path);
+                $path = 'channel-logo/' . $epgKey. '.png';
+                $fileName = storage_path('app/' . $path);
                 file_put_contents($fileName, $file);
                 $channel->logo = '/file/get?path=' . $path;
                 $channel->save();
