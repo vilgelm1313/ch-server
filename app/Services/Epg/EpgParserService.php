@@ -147,7 +147,7 @@ class EpgParserService
                 $path = 'channel-logo/' . $epgKey. '.png';
                 $fileName = storage_path('app/' . $path);
                 file_put_contents($fileName, $file);
-                $channel->logo = '/file/get?path=' . $path;
+                $channel->logo = '/api/file/get?path=' . $path;
                 $channel->save();
 
                 $this->logger->database([
