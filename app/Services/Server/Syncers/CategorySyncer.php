@@ -18,7 +18,7 @@ class CategorySyncer implements ServerSyncerContract
                 'id' => $category->id,
                 'name' => $category->name,
                 'order' => $category->index,
-                'parent' => $category->is_parental_control,
+                'parent' => (int) $category->is_parental_control,
             ];
         }
 
