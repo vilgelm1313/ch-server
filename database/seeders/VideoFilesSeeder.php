@@ -28,6 +28,9 @@ class VideoFilesSeeder extends InitialDataSeeder
         $info = explode('|', $item['sub-title']);
         $v->imbd = trim(str_replace('IMDb: ', '', $info[0]));
         $key = 1;
+        if (isset($info[1])) {
+            $info[1] = trim($info[1]);
+        }
         if (strpos($info[1], 'Kinopoisk:') !== false) {
             $v->imbd = trim(str_replace('Kinopoisk: ', '', $info[1]));
             $key = 2;
