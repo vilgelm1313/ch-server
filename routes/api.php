@@ -56,4 +56,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/server/sync/all', [ServerController::class, 'syncAll']);
     Route::post('/server/{server}/relation', [ServerController::class, 'addRelations']);
     Route::post('/server/{server}/sync', [ServerController::class, 'sync']);
+
+    Route::post('/category/{category}/channels', [CategoryController::class, 'setChannelsPositions']);
 });
