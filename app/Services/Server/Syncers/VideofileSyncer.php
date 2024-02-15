@@ -11,15 +11,15 @@ class VideofileSyncer implements ServerSyncerContract
 {
     public function getData(Server $server): array
     {
-        $categories = $server->videoFiles()->where('is_active', true)->get();
+        $files = $server->videoFiles()->where('is_active', true)->get();
 
         $data = [];
         /**
          * @var VideoFile $videoFile
          */
-        foreach ($categories as $videoFile) {
-            $filename = Str::afterLast('/', $videoFile->path);
-            $path = Str::beforeLast('/', $videoFile->path);
+        foreach ($files as $videoFile) {
+            $filename = Str::afterLast($videoFile->path, '/');
+            $path = Str::beforeLast($videoFile->path, '/');
             $subtitles = [];
             if ($videoFile->imbd) {
                 $subtitles[] = 'IMBD: '. $videoFile->imbd;
@@ -43,11 +43,18 @@ class VideofileSyncer implements ServerSyncerContract
             if ($videoFile->actors) {
                 $subtitle .= ' В ролях: ' . $videoFile->genres . '.';
             }
+            $title = [];
+            if ($videoFile->title) {
+                $title[] = $videoFile->title;
+            }
+            if ($videoFile->original_title) {
+                $title[] = $videoFile->original_title;
+            }
             $data[] = [
                 'filename' => $filename,
                 'path' => $path,
-                'poster' => $videoFile->poster,
-                'title' => $videoFile->title . $videoFile->original_title ? (' | '. $videoFile->original_title) : '',
+                'poster' => str_replace('https://', '', $videoFile->poster),
+                'title' => implode(' | ', $title),
                 'sub-title' => $subtitle,
                 'description' => $videoFile->description,
                 'time-to-die' => Carbon::parse($videoFile->end)->timestamp,
