@@ -29,7 +29,8 @@ class ServerSyncer
 
     protected function getSyncer(string $type): ServerSyncerContract
     {
-        $name = "App\\Services\\Server\\Syncers\\{strtoupper($type)}Syncer";
+        $class = ucfirst($type);
+        $name = "App\\Services\\Server\\Syncers\\{$class}Syncer";
 
         return new $name;
     }
