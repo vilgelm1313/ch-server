@@ -31,6 +31,12 @@ abstract class BaseRepository
 
     public function index(?int $perPage = 100, ?array $filters = []): LengthAwarePaginator
     {
+        $builder = $this->getQuery();
+        return $this->paginate($builder, $perPage, $filters);
+    }
+
+    protected function paginate(Builder $builder, ?int $perPage = 100, ?array $filters = []): LengthAwarePaginator
+    {
         /**
          * @var FilterService
          */
@@ -38,7 +44,6 @@ abstract class BaseRepository
         /**
          * @var Builder
          */
-        $builder = $this->getQuery();
         $builder = $filterService->addFilters($builder, $this->getClass(), $filters);
         if ($this->getDefaultOrderColumn()) {
             $builder->orderBy($this->getDefaultOrderColumn(), $this->getDefaultOrderDirection());
