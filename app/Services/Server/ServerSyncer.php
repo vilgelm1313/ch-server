@@ -71,7 +71,7 @@ class ServerSyncer
             ]
         ]);
         $result = null;
-        if (!$result === false) {
+        if ($result === false) {
             $this->loggerService->database([
                 'type' => 'sync',
                 'action' => 'fail',
@@ -84,7 +84,7 @@ class ServerSyncer
         } else {
             $this->loggerService->database([
                 'type' => 'sync',
-                'action' => 'fail',
+                'action' => 'success',
                 'info' => [
                     'name' => $name,
                     'type' => $type,
