@@ -41,7 +41,12 @@ class ServerSyncer
             $send['data']['delete'] = $name;
             $send['count'] = 1;
         } elseif (count($data) > 0) {
-            $send['data'][$name] = $data;
+            if ($name) {
+                $send['data'][$name] = $data;
+            } else {
+                $send['data'] = $data;
+            }
+            
             $send['count'] = count($data);
         }
         $send['type'] = $type;
