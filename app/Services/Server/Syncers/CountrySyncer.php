@@ -9,7 +9,7 @@ class CountrySyncer implements ServerSyncerContract
 {
     public function getData(Server $server): array
     {
-        $countries = $server->categories()->where('is_active', true)->get();
+        $countries = $server->countries()->where('is_active', true)->get();
         $data = [];
         /**
          * @var Category
