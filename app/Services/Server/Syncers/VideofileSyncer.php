@@ -41,7 +41,7 @@ class VideofileSyncer implements ServerSyncerContract
                 $subtitle .= ' Режиссер: ' . $videoFile->director . '.';
             }
             if ($videoFile->actors) {
-                $subtitle .= ' В ролях: ' . $videoFile->genres . '.';
+                $subtitle .= ' В ролях: ' . $videoFile->actors . '.';
             }
             $title = [];
             if ($videoFile->title) {
