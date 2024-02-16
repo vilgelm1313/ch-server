@@ -50,6 +50,9 @@ class Channel extends BaseModel
             'relationship' => 'category',
             'field' => 'name',
         ],
+        'is_active' => [
+            'type' => 'equal',
+        ],
     ];
 
     protected $fillable = [
