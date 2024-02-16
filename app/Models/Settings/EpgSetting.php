@@ -3,6 +3,7 @@
 namespace App\Models\Settings;
 
 use App\Models\BaseModel;
+use App\Models\Channels\Channel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -45,4 +46,9 @@ class EpgSetting extends BaseModel
         'processing' => 'boolean',
         'has_error' => 'boolean',
     ];
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class);
+    }
 }

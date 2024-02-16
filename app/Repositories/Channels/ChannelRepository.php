@@ -22,6 +22,8 @@ class ChannelRepository extends BaseRepository
             'servers',
             'country',
             'categories',
+            'epgSetting',
+            'epgSettings'
         ];
     }
 

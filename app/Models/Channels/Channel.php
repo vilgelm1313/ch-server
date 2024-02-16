@@ -5,6 +5,7 @@ namespace App\Models\Channels;
 use App\Models\BaseModel;
 use App\Models\Settings\Category;
 use App\Models\Settings\Country;
+use App\Models\Settings\EpgSetting;
 use App\Models\Settings\Server;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -61,6 +62,7 @@ class Channel extends BaseModel
         'dvr',
         'is_active',
         'is_external',
+        'epg_setting_id',
     ];
     protected $casts = [
         'is_active' => 'boolean',
@@ -83,5 +85,15 @@ class Channel extends BaseModel
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    public function epgSettings()
+    {
+        return $this->belongsToMany(EpgSetting::class, 'channel_epg_setting');
+    }
+
+    public function epgSetting()
+    {
+        return $this->belongsTo(EpgSetting::class);
     }
 }

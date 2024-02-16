@@ -25,7 +25,7 @@ class EpgParserService
     {
         $reader = new XMLReader();
         $reader->open($this->epgSetting->url);
-
+        $this->epgSetting->channels()->sync([]);
         while ($reader->read()) {
 
             if ($reader->nodeType !== XMLReader::ELEMENT) {
@@ -89,6 +89,10 @@ class EpgParserService
                 continue;
             }
             $channel = $this->channels[$reader->getAttribute('channel')];
+
+            if ($channel->epg_setting_id && $channel->epg_setting_id !== $this->epgSetting->id) {
+                continue;
+            }
             Epg::where('start', '>=', $start)
                 ->where('end', '<=', $stop)
                 ->where('language', $language)
@@ -113,6 +117,7 @@ class EpgParserService
         $xml = simplexml_load_string($reader->readOuterXML());
         $channelName = [(string) $xml->{'display-name'}][0];
         $epgKey = $this->epgSetting->prefix . '_' . $this->getEpgKey($channelName);
+
         $channel = Channel::where('epg_key', $epgKey)->first();
         if (!$channel) {
             $channel = Channel::where('name', trim($channelName))
@@ -159,6 +164,8 @@ class EpgParserService
 
             }
         }
+
+        $channel->epgSettings()->syncWithoutDetaching([$this->epgSetting->id]);
 
         return $channel;
     }
