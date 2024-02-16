@@ -89,7 +89,7 @@ class Channel extends BaseModel
 
     public function epgSettings()
     {
-        return $this->belongsToMany(EpgSetting::class, 'channel_epg_setting');
+        return $this->belongsToMany(EpgSetting::class, 'channels_epg_settings');
     }
 
     public function epgSetting()
