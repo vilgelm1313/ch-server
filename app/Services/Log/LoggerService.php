@@ -22,7 +22,7 @@ class LoggerService
             //
         }
     }
-
+    
     public function logException(Throwable $exception): void
     {
         $message = $exception->getFile() . PHP_EOL . PHP_EOL;

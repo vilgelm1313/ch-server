@@ -105,6 +105,6 @@ class Handler extends ExceptionHandler
          * @var LoggerService
          */
         $app = app()->make(LoggerService::class);
-        //$app->logException($e);
+        $app->logException($e);
     }
 }
