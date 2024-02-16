@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -79,6 +80,9 @@ class Handler extends ExceptionHandler
             $message = 'Not found';
             $code = 404;
             $this->logInTelegram($e);
+        } elseif ($e instanceof ThrottleRequestsException) {
+            $message = 'Too many requests, try later';
+            $code = 500;
         } else {
             $message = 'Internal server error';
             $code = 500;
