@@ -19,6 +19,7 @@ class KinopoiskUnofficialService
 
     public function getMovieInfo(string $url): array
     {
+        $url = parse_url($url, PHP_URL_PATH);
         $url = trim($url, '/');
         $id = Str::afterLast($url, '/');
 

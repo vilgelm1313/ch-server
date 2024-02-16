@@ -48,6 +48,11 @@ class VideoFile extends BaseModel
         'actors',
         'genres',
     ];
+
+    const FILTERS = [
+        'title' => ['type' => 'string'],
+    ];
+
     protected $casts = [
         'is_active' => 'boolean',
         'year' => 'string',
