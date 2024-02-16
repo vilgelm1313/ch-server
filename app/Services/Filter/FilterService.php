@@ -11,7 +11,7 @@ class FilterService
         $filters = $this->getAvailableFilters($model);
 
         foreach ($filters as $key => $filter) {
-            if (!isset($params[$key]) || (!$params[$key] && $params[$key] !== 0)) {
+            if (!isset($params[$key]) || (!$params[$key] && $params[$key] != 0)) {
                 continue;
             }
             if (empty($filter['field'])) {
