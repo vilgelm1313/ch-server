@@ -2,6 +2,7 @@
 
 namespace App\Services\Epg;
 
+use App\Models\Channels\Channel;
 use App\Models\EPG\Epg;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -14,6 +15,13 @@ class EpgCreateService
     {
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!DOCTYPE tv SYSTEM "xmltv.dtd"><tv></tv>');
 
+        $channels = Channel::all();
+
+        foreach ($channels as $channel) {
+            $c = $xml->addChild('channel');
+            $c->addAttribute('id', $channel->old_epg_key);
+            $name = $c->addChild('display-name', $channel->title);
+        }
         $programmes = Epg::where('start', '>', Carbon::now())
             ->whereHas('channel')
             ->with('channel')
