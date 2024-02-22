@@ -48,7 +48,7 @@ class EpgParserService
         $start = Carbon::parse($reader->getAttribute('start'))->utc();
         $stop = Carbon::parse($reader->getAttribute('stop'))->utc();
 
-        $now = Carbon::now();
+        $now = Carbon::now()->subDay();
         $inTwoWeeks = Carbon::now()->addDays(15);
 
         if ($start->lt($now) || $start->gt($inTwoWeeks)) {

@@ -22,7 +22,7 @@ class EpgCreateService
             $c->addAttribute('id', $channel->old_epg_key);
             $name = $c->addChild('display-name', $channel->old_epg_key);
         }
-        $programmes = Epg::where('start', '>', Carbon::now())
+        $programmes = Epg::where('start', '>', Carbon::now()->subDay())
             ->whereHas('channel')
             ->with('channel')
             ->get();
@@ -64,7 +64,6 @@ class EpgCreateService
         gzclose($fpOut);
 
         Http::asMultipart()
-            ->attach('xml', file_get_contents(storage_path('app/' . $file)), 'xmltv.xml')
             ->attach('gz', file_get_contents(storage_path('app/' . $file . '.gz')), 'xmltv.xml.gz')
             ->post('https://plati.one/epg/save.php');
     }
