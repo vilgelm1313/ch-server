@@ -30,22 +30,17 @@ class EpgCreateService
             $p->addAttribute('start_unix', $programme->start->timestamp);
             $p->addAttribute('stop_unix', $programme->end->timestamp);
             $p->addAttribute('channel', $programme->channel->sync_epg_key);
-            $title = $p->addChild('title', html_entity_decode($programme->title, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
-            if ($programme->language) {
-                $title->addAttribute('lang', $programme->language);
-            }
-            if ($programme->sub_title) {
-                $subtitle = $p->addChild('sub-title', html_entity_decode($programme->sub_title, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
-                if ($programme->language) {
-                    $subtitle->addAttribute('lang', $programme->language);
+            $fields = ['title','sub_title', 'description'];
+            foreach ($fields as $field) {
+                if ($programme->$field) {
+                    $name = str_replace('_', '-', $field);
+                    $value = htmlspecialchars(html_entity_decode($programme->$field, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
+                    $child = $p->addChild($name, $value);
+                    if ($programme->language) {
+                        $child->addAttribute('lang', $programme->language);
+                    }
                 }
             }
-            if ($programme->description) {
-                $description = $p->addChild('desc', html_entity_decode($programme->description, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
-                if ($programme->language) {
-                    $description->addAttribute('lang', $programme->language);
-                }
-            }   
         }
 
         $file = 'epg/xmltv.xml';
