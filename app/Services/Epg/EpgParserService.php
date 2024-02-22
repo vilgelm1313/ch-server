@@ -123,11 +123,6 @@ class EpgParserService
             $channel = Channel::where('name', trim($channelName))
                 ->where('is_external', false)
                 ->first();
-
-            if ($channel && $channel->epg_setting_id === $this->epgSetting->id) {
-                $channel->epg_key = $epgKey;
-                $channel->save();
-            }
         }
         if (!$channel) {
 
@@ -163,6 +158,12 @@ class EpgParserService
             } catch (\Throwable $th) {
 
             }
+        }
+
+
+        if ($channel && $channel->epg_setting_id === $this->epgSetting->id) {
+            $channel->epg_key = $epgKey;
+            $channel->save();
         }
 
         $channel->epgSettings()->syncWithoutDetaching([$this->epgSetting->id]);
