@@ -29,7 +29,7 @@ class EpgCreateService
             $p->addAttribute('start_unix', $programme->start->timestamp);
             $p->addAttribute('stop_unix', $programme->end->timestamp);
             $p->addAttribute('channel', $programme->channel->sync_epg_key);
-            $title = $programme->addChild('title', html_entity_decode($programme->title, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
+            $title = $p->addChild('title', html_entity_decode($programme->title, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
             if ($programme->language) {
                 $title->addAttribute('lang', $programme->language);
             }
