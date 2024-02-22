@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command(EpgParseCommand::class)
+        $schedule->command(EpgParseCommand::class, ['--force'])
             ->dailyAt('02:00')
             ->withoutOverlapping()
             ->after(function() {

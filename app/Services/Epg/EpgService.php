@@ -19,11 +19,10 @@ class EpgService
     public function run(bool $force): void
     {
         if ($force) {
-            $epgSettings = $this->getEpgSettingsToRun();
-        } else {
             $epgSettings = EpgSetting::where('is_active', true)->get();
-        }
-        
+        } else {
+            $epgSettings = $this->getEpgSettingsToRun();
+        } 
 
         foreach ($epgSettings as $epgSetting) {
             $this->parseEpg($epgSetting);
