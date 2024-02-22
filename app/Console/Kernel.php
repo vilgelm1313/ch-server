@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\EpgCommand;
+use App\Console\Commands\EpgCreateCommand;
+use App\Console\Commands\EpgParseCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,9 +16,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command(EpgCommand::class)
-            ->everyTenMinutes()
-            ->withoutOverlapping();
+        $schedule->command(EpgParseCommand::class)
+            ->dailyAt('02:00')
+            ->withoutOverlapping()
+            ->after(function() {
+                $this->call(EpgCreateCommand::class);
+            });
     }
 
     /**

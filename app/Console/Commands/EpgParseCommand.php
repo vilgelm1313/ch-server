@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\Epg\EpgService;
 use Illuminate\Console\Command;
 
-class EpgCommand extends Command
+class EpgParseCommand extends Command
 {
     protected $signature = 'epg:parse';
 
