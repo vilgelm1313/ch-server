@@ -203,7 +203,7 @@ class EpgParserService
         $subject = str_replace(' ', '_', $subject);
         $subject = preg_replace('/\+(\d)/', '$1h', $subject);
 
-        $subject = strtr($subject, $letters = [
+        $subject = strtr($subject, [
             'а' => 'a',
             'б' => 'b',
             'в' => 'v',
