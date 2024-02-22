@@ -32,11 +32,13 @@ class EpgCreateService
          *
          */
         foreach ($programmes as $programme) {
+            $start = Carbon::createFromFormat('Y-m-d H:i:s', $programme->start);
+            $end = Carbon::createFromFormat('Y-m-d H:i:s', $programme->end);
             $p = $xml->addChild('programme');
-            $p->addAttribute('start', $programme->start->format('YmdHis'));
-            $p->addAttribute('stop', $programme->end->format('YmdHis'));
-            $p->addAttribute('start_unix', $programme->start->timestamp);
-            $p->addAttribute('stop_unix', $programme->end->timestamp);
+            $p->addAttribute('start', $start->format('YmdHis'));
+            $p->addAttribute('stop', $end->format('YmdHis'));
+            $p->addAttribute('start_unix', $start->timestamp);
+            $p->addAttribute('stop_unix', $start->timestamp);
             $p->addAttribute('channel', $programme->channel->old_epg_key);
             $fields = ['title','sub_title', 'description'];
             foreach ($fields as $field) {

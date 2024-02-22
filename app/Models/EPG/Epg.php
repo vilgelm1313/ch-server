@@ -48,11 +48,6 @@ class Epg extends BaseModel
         'epg_setting_id',
     ];
 
-    protected $casts = [
-        'start' => 'date',
-        'end' => 'date',
-    ];
-
     public function channel()
     {
         return $this->belongsTo(Channel::class);
