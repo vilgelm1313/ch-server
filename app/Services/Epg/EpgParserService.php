@@ -161,7 +161,7 @@ class EpgParserService
         }
 
 
-        if ($channel && $channel->epg_setting_id === $this->epgSetting->id) {
+        if ($channel && (!$channel->epg_setting_id || $channel->epg_setting_id === $this->epgSetting->id)) {
             $channel->epg_key = $epgKey;
             $channel->save();
         }
