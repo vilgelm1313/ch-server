@@ -29,7 +29,7 @@ class EpgCreateService
             $p->addAttribute('stop', $programme->end->format('YmdHis'));
             $p->addAttribute('start_unix', $programme->start->timestamp);
             $p->addAttribute('stop_unix', $programme->end->timestamp);
-            $p->addAttribute('channel', $programme->channel->sync_epg_key);
+            $p->addAttribute('channel', $programme->channel->old_epg_key);
             $fields = ['title','sub_title', 'description'];
             foreach ($fields as $field) {
                 if ($programme->$field) {
