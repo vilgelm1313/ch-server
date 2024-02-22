@@ -4,6 +4,7 @@ namespace App\Services\Epg;
 
 use App\Models\EPG\Epg;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use SimpleXMLElement;
 
@@ -58,5 +59,10 @@ class EpgCreateService
         }
         fclose($fpIn);
         gzclose($fpOut);
+
+        Http::asForm()
+            ->attach('xml', file_get_contents(storage_path('app/' . $file)))
+            ->attach('gz', file_get_contents(storage_path('app/' . $file . '.gz')))
+            ->post('https://plati.one/epg/save.php');
     }
 }
