@@ -56,8 +56,8 @@ class EpgCreateService
         gzclose($fpOut);
 
         Http::asForm()
-            ->attach('xml', file_get_contents(storage_path('app/' . $file)))
-            ->attach('gz', file_get_contents(storage_path('app/' . $file . '.gz')))
+            ->attach('xml', file_get_contents(storage_path('app/' . $file)), 'xmltv.xml')
+            ->attach('gz', file_get_contents(storage_path('app/' . $file . '.gz')), 'xmltv.xml.gz')
             ->post('https://plati.one/epg/save.php');
     }
 }
