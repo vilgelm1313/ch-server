@@ -15,7 +15,8 @@ class FileController extends ApiController
             'type' => 'required|string|in:video-file,channel-logo',
         ]);
 
-        $fileName = Storage::putFile($request->type, $request->file('file'));
+        $path = 'public/' . $request->type;
+        $fileName = Storage::putFile($path, $request->file('file'));
 
         if ($fileName) {
             return $this->success([
@@ -30,6 +31,6 @@ class FileController extends ApiController
             'path' => 'required|string|max:255',
         ]);
 
-        return response()->file(storage_path('app/' . $request->path));
+        return response()->file(storage_path('app/public/' . $request->path));
     }
 }
