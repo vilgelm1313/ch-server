@@ -7,10 +7,11 @@ use Illuminate\Console\Command;
 
 class EpgParseCommand extends Command
 {
-    protected $signature = 'epg:parse';
+    protected $signature = 'epg:parse {--force}';
 
     public function handle(EpgService $epgService)
     {
-        $epgService->run();
+        $force = $this->option('force');
+        $epgService->run($force);
     }
 }

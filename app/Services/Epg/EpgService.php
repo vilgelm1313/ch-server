@@ -16,9 +16,14 @@ class EpgService
         $this->logger = app()->make(LoggerService::class);
     }
 
-    public function run(): void
+    public function run(bool $force): void
     {
-        $epgSettings = $this->getEpgSettingsToRun();
+        if ($force) {
+            $epgSettings = $this->getEpgSettingsToRun();
+        } else {
+            $epgSettings = EpgSetting::where('is_active', true)->get();
+        }
+        
 
         foreach ($epgSettings as $epgSetting) {
             $this->parseEpg($epgSetting);
