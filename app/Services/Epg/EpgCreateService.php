@@ -20,7 +20,7 @@ class EpgCreateService
         foreach ($channels as $channel) {
             $c = $xml->addChild('channel');
             $c->addAttribute('id', $channel->old_epg_key);
-            $name = $c->addChild('display-name', $channel->title);
+            $name = $c->addChild('display-name', $channel->name);
         }
         $programmes = Epg::where('start', '>', Carbon::now())
             ->whereHas('channel')
