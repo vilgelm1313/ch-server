@@ -44,9 +44,7 @@ class EpgCreateService
                     $name = str_replace('_', '-', $field);
                     $value = htmlspecialchars(html_entity_decode($programme->$field, ENT_QUOTES | ENT_XHTML, 'UTF-8'));
                     $child = $p->addChild($name, $value);
-                    if ($programme->language) {
-                        $child->addAttribute('lang', $programme->language);
-                    }
+                    $child->addAttribute('lang', 'ru');
                 }
             }
         }
