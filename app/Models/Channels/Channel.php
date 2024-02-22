@@ -7,6 +7,7 @@ use App\Models\Settings\Category;
 use App\Models\Settings\Country;
 use App\Models\Settings\EpgSetting;
 use App\Models\Settings\Server;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -98,5 +99,19 @@ class Channel extends BaseModel
     public function epgSetting()
     {
         return $this->belongsTo(EpgSetting::class);
+    }
+
+    public function syncLogo(): Attribute
+    {
+        $logo = str_replace('https://plati.one/logo/', '', $this->logo ?? '');
+        $logo = str_replace('/api/file/get?path=', '', $logo ?? '');
+
+        return new Attribute(fn () => $logo);
+    }
+
+    public function syncEpgKey(): Attribute
+    {
+        $epgKey = preg_replace('/\d{1,3}[A-Za-z]_/', '', $this->epg_key ?? '');
+        return new Attribute(fn () => $epgKey);
     }
 }

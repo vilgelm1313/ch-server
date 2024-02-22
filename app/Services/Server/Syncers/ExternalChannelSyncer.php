@@ -20,10 +20,10 @@ class ExternalChannelSyncer implements ServerSyncerContract
                 $data[] = [
                     'id' => $index++,
                     'name' => $channel->name,
-                    'epg' => $channel->epg_key,
+                    'epg' => $channel->sync_epg_key,
                     'packet' => $category->id,
                     'smartiptv' => $channel->smartiptv,
-                    'logo' => str_replace('https://plati.one/logo/', '', $channel->logo ?? ''),
+                    'epg' => $channel->sync_logo,
                     'corder' => $category->pivot->index,
                     'dvr' => (int) $channel->dvr,
                     'external' => 1,

@@ -22,13 +22,14 @@ class ChannelSyncer implements ServerSyncerContract
         $index = 1;
         foreach ($channels as $channel) {
             foreach ($channel->categories as $category) {
+                
                 $data[] = [
                     'id' => $index++,
                     'name' => $channel->name,
-                    'epg' => $channel->epg_key,
+                    'epg' => $channel->sync_epg_key,
                     'packet' => $category->id,
                     'smartiptv' => $channel->smartiptv,
-                    'logo' => str_replace('https://plati.one/logo/', '', $channel->logo ?? ''),
+                    'logo' => $channel->sync_logo,
                     'corder' => $category->pivot->index,
                     'dvr' => (int) $channel->dvr,
                 ];
