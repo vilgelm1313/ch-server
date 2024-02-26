@@ -171,6 +171,11 @@ class EpgParserService
                 $otherChannel->epg_key = $epgKey;
                 $otherChannel->save();
             }
+
+            if (!$otherChannel->epg_setting_id) {
+                $otherChannel->epg_setting_id = $this->epgSetting->id;
+                $otherChannel->save();
+            }
             $channel->epgSettings()->syncWithoutDetaching([$this->epgSetting->id]);
         }
 
