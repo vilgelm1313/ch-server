@@ -140,6 +140,8 @@ class EpgParserService
             ]);
         }
 
+
+
         if (!$channel->logo) {
             try {
                 $logo = (string) $xml->icon->attributes()->src;
@@ -160,13 +162,17 @@ class EpgParserService
             }
         }
 
+        $otherChannels = Channel::where('name', $channelName)
+            ->orWhere('epg_key', $epgKey)
+            ->get();
 
-        if ($channel && (!$channel->epg_setting_id || $channel->epg_setting_id === $this->epgSetting->id)) {
-            $channel->epg_key = $epgKey;
-            $channel->save();
+        foreach ($otherChannels as $otherChannel) {
+            if (!$otherChannel->epg_setting_id || $otherChannel->epg_setting_id === $this->epgSetting->id) {
+                $otherChannel->epg_key = $epgKey;
+                $otherChannel->save();
+            }
+            $channel->epgSettings()->syncWithoutDetaching([$this->epgSetting->id]);
         }
-
-        $channel->epgSettings()->syncWithoutDetaching([$this->epgSetting->id]);
 
         return $channel;
     }
