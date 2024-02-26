@@ -112,7 +112,7 @@ class Channel extends BaseModel
 
     public function syncEpgKey(): Attribute
     {
-        $epgKey = preg_replace('/\d{1,3}[A-Za-z]_/', '', $this->epg_key ?? '');
+        $epgKey = preg_replace('/^[\dA-Za-z]{2,4}_/', '', $this->epg_key ?? '');
         return new Attribute(fn () => $epgKey);
     }
 }
