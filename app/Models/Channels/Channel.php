@@ -67,6 +67,7 @@ class Channel extends BaseModel
         'is_active',
         'is_external',
         'epg_setting_id',
+        'epg_key',
     ];
     protected $casts = [
         'is_active' => 'boolean',
