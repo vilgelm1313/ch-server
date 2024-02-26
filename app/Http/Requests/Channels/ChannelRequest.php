@@ -19,7 +19,7 @@ class ChannelRequest extends BaseRequest
             'url' => 'nullable|string|max:255|url',
             'dvr' => 'nullable|integer',
             'is_active' => 'required|boolean',
-            'is_external' => 'required|boolean',
+            'is_external' => 'nullable|boolean',
         ];
 
         return $rules;
