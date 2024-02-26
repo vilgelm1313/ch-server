@@ -116,7 +116,7 @@ class EpgParserService
     {
         $xml = simplexml_load_string($reader->readOuterXML());
         $channelName = [(string) $xml->{'display-name'}][0];
-        $epgKey = $this->epgSetting->prefix . '_' . $this->getEpgKey($channelName);
+        $epgKey = $this->getEpgKey($channelName);
 
         $channel = Channel::where('epg_key', $epgKey)->first();
         if (!$channel) {
