@@ -19,8 +19,8 @@ class EpgCreateService
 
         foreach ($channels as $channel) {
             $c = $xml->addChild('channel');
-            $c->addAttribute('id', $channel->old_epg_key);
-            $name = $c->addChild('display-name', $channel->old_epg_key);
+            $c->addAttribute('id', $channel->epg_key);
+            $name = $c->addChild('display-name', $channel->epg_key);
         }
         $programmes = Epg::where('start', '>', Carbon::now()->subDay())
             ->whereHas('channel')
@@ -39,7 +39,7 @@ class EpgCreateService
             $p->addAttribute('stop', $end->format('YmdHis'));
             $p->addAttribute('start_unix', $start->timestamp);
             $p->addAttribute('stop_unix', $start->timestamp);
-            $p->addAttribute('channel', $programme->channel->old_epg_key);
+            $p->addAttribute('channel', $programme->channel->epg_key);
             $fields = ['title','sub_title', 'description'];
             foreach ($fields as $field) {
                 if ($programme->$field) {
