@@ -71,7 +71,7 @@ class ServerSyncer
                 'server' => $server->name,
             ]
         ]);
-        $result = null;
+        $result = file_get_contents($server->address, false, stream_context_create($options));
         if ($result === false) {
             $this->loggerService->database([
                 'type' => 'sync',
