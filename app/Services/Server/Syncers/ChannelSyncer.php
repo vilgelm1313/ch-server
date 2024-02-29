@@ -24,7 +24,7 @@ class ChannelSyncer implements ServerSyncerContract
             foreach ($channel->categories as $category) {
                 
                 $data[] = [
-                    'id' => $index++,
+                    'id' => (string) $index++,
                     'name' => $channel->name,
                     'epg' => $channel->epg_key,
                     'packet' => $category->id,
