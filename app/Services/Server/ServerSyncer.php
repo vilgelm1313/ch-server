@@ -38,7 +38,6 @@ class ServerSyncer
 
     public function upload(Server $server, string $type, string $name, mixed $data)
     {
-        $server->address = null;
         if ($data == 'delete') {
             $send['data']['delete'] = $name;
             $send['count'] = 1;
