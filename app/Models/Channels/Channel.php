@@ -106,6 +106,7 @@ class Channel extends BaseModel
     {
         $logo = str_replace('https://plati.one/logo/', '', $this->logo ?? '');
         $logo = str_replace('/api/file/get?path=', '', $logo ?? '');
+        $logo = str_replace('public/', '', $logo ?? '');
 
         return new Attribute(fn () => $logo);
     }
