@@ -31,6 +31,6 @@ class FileController extends ApiController
             'path' => 'required|string|max:255',
         ]);
 
-        return response()->file(storage_path('app/public/' . $request->path));
+        return response()->file(storage_path('app/' . $request->path));
     }
 }
