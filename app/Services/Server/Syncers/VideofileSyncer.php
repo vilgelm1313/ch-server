@@ -52,7 +52,7 @@ class VideofileSyncer implements ServerSyncerContract
             if ($videoFile->original_title) {
                 $title[] = $videoFile->original_title;
             }
-            $data[] = [
+            $data[$filename] = [
                 'filename' => $filename,
                 'path' => $path,
                 'poster' => str_replace('https://', '', $videoFile->poster),
