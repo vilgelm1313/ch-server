@@ -59,7 +59,7 @@ class VideofileSyncer implements ServerSyncerContract
                 'title' => implode(' | ', $title),
                 'sub-title' => $subtitle,
                 'description' => $videoFile->description,
-                'time-to-die' => Carbon::parse($videoFile->end)->timestamp,
+                'time-to-die' => Carbon::parse($videoFile->show_end)->timestamp,
                 'active' => 1,
             ];
         }
