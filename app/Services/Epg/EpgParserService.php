@@ -32,7 +32,9 @@ class EpgParserService
                 continue;
             }
             if ($reader->name == 'channel') {
-                $this->channels[$reader->getAttribute('id')] = $this->parseChannel($reader);
+                $channel = $this->parseChannel($reader);
+                $this->channels[$reader->getAttribute('id')] = $channel;
+                Epg::where('channel_id', $channel->id)->delete();
             } elseif ($reader->name == 'programme') {
                 $this->parseProgramme($reader);
             }
