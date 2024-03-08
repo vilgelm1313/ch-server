@@ -19,8 +19,8 @@ class EpgCreateService
 
         foreach ($channels as $channel) {
             $c = $xml->addChild('channel');
-            $c->addAttribute('id', $channel->epg_key);
-            $name = $c->addChild('display-name', $channel->epg_key);
+            $c->addAttribute('id', $channel->flussonic);
+            $name = $c->addChild('display-name', $channel->flussonic);
         }
         $programmes = Epg::where('start', '>', Carbon::now()->subDay())
             ->whereHas('channel')
