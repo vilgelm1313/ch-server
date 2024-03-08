@@ -39,7 +39,7 @@ class EpgCreateService
             $p->addAttribute('stop', $end->format('YmdHis'));
             $p->addAttribute('start_unix', $start->timestamp);
             $p->addAttribute('stop_unix', $start->timestamp);
-            $p->addAttribute('channel', $programme->channel->epg_key);
+            $p->addAttribute('channel', $programme->channel->flussonic);
             $fields = ['title','sub_title', 'description'];
             foreach ($fields as $field) {
                 if ($programme->$field) {
