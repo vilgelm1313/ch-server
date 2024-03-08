@@ -15,7 +15,9 @@ class EpgCreateService
     {
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!DOCTYPE tv SYSTEM "xmltv.dtd"><tv></tv>');
 
-        $channels = Channel::all();
+        $channels = Channel::whereNotNull('flussonic')
+            ->orWhere('flussonic', '<>', '')
+            ->get();
 
         foreach ($channels as $channel) {
             $c = $xml->addChild('channel');
@@ -32,6 +34,9 @@ class EpgCreateService
          *
          */
         foreach ($programmes as $programme) {
+            if (!$programme->channel->flussonic) {
+                continue;
+            }
             $start = Carbon::createFromFormat('Y-m-d H:i:s', $programme->start);
             $end = Carbon::createFromFormat('Y-m-d H:i:s', $programme->end);
             $p = $xml->addChild('programme');
