@@ -26,7 +26,7 @@ class ChannelSyncer implements ServerSyncerContract
                 $data[] = [
                     'id' => (string) $index++,
                     'name' => $channel->name,
-                    'epg' => $channel->epg_key,
+                    'epg' => $channel->flussonic,
                     'packet' => $category->id,
                     'smartiptv' => $channel->smartiptv,
                     'logo' => $channel->sync_logo,

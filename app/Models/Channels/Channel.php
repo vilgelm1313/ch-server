@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $name
  * @property string $comment
  * @property string $epg_key
+ * @property string $flussonic
  * @property string $logo
  * @property int $category_id
  * @property int $country_id
