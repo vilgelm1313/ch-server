@@ -69,6 +69,7 @@ class Channel extends BaseModel
         'is_external',
         'epg_setting_id',
         'epg_key',
+        'flussonic',
     ];
     protected $casts = [
         'is_active' => 'boolean',
