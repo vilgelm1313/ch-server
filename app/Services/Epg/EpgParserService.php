@@ -7,7 +7,6 @@ use App\Models\EPG\Epg;
 use App\Models\Settings\EpgSetting;
 use App\Services\Log\LoggerService;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
 use SimpleXMLElement;
 use XMLReader;
 
@@ -90,47 +89,51 @@ class EpgParserService
             if (empty($item['title'])) {
                 continue;
             }
-            $channel = $this->channels[$reader->getAttribute('channel')];
+            $channels = $this->channels[$reader->getAttribute('channel')];
 
-            if ($channel->epg_setting_id && $channel->epg_setting_id !== $this->epgSetting->id) {
-                continue;
+            foreach ($channels as $channel) {
+                if ($channel->epg_setting_id && $channel->epg_setting_id !== $this->epgSetting->id) {
+                    continue;
+                }
+
+                Epg::where('start', '>=', $start)
+                    ->where('end', '<=', $stop)
+                    ->where('language', $language)
+                    ->where('channel_id', $channel->id)
+                    ->delete();
+    
+                $epg = new Epg();
+                $epg->start = $start;
+                $epg->end = $stop;
+                $epg->title = $item['title'] ?? '';
+                $epg->sub_title = $item['sub-title'] ?? '';
+                $epg->description = $item['desc'] ?? '';
+                $epg->language = $language;
+                $epg->channel_id = $channel->id;
+                $epg->epg_setting_id = $this->epgSetting->id;
+                $epg->save();
             }
-            Epg::where('start', '>=', $start)
-                ->where('end', '<=', $stop)
-                ->where('language', $language)
-                ->where('channel_id', $channel->id)
-                ->delete();
-
-            $epg = new Epg();
-            $epg->start = $start;
-            $epg->end = $stop;
-            $epg->title = $item['title'] ?? '';
-            $epg->sub_title = $item['sub-title'] ?? '';
-            $epg->description = $item['desc'] ?? '';
-            $epg->language = $language;
-            $epg->channel_id = $channel->id;
-            $epg->epg_setting_id = $this->epgSetting->id;
-            $epg->save();
         }
     }
 
-    protected function parseChannel(XMLReader $reader): Channel
+    protected function parseChannel(XMLReader $reader)
     {
         $xml = simplexml_load_string($reader->readOuterXML());
         $channelName = [(string) $xml->{'display-name'}][0];
         $epgKey = $this->getEpgKey($channelName);
 
-        $channel = Channel::where('epg_key', $epgKey)->first();
-        if (!$channel) {
-            $channel = Channel::where('name', trim($channelName))
+        $channels = Channel::where('epg_key', $epgKey)->get();
+        if ($channels->isEmpty()) {
+            $channels = Channel::where('name', trim($channelName))
                 ->where('is_external', false)
-                ->first();
+                ->get();
         }
-        if (!$channel) {
+        if ($channels->isEmpty()) {
 
             $channel = new Channel();
             $channel->name = $channelName;
             $channel->epg_key = $epgKey;
+            $channel->flussonic = $epgKey;
             $channel->index = 9999;
             $channel->is_active = false;
             $channel->save();
@@ -140,15 +143,18 @@ class EpgParserService
                 'action' => 'channel',
                 'value' => $channel->toArray(),
             ]);
+            $channels->add($channel);
         }
 
 
-
-        if (!$channel->logo) {
+        foreach ($channels as $channel) {
+            if (!$channel->logo) {
+                continue;
+            }
             try {
                 $logo = (string) $xml->icon->attributes()->src;
                 $file = file_get_contents($logo);
-                $path = 'public/channel-logo/' . $epgKey. '.png';
+                $path = 'public/channel-logo/' . $epgKey . '-' . $channel->id . '.png';
                 $fileName = storage_path('app/' . $path);
                 file_put_contents($fileName, $file);
                 $channel->logo = '/api/file/get?path=' . $path;
@@ -162,26 +168,19 @@ class EpgParserService
             } catch (\Throwable $th) {
 
             }
-        }
-
-        $otherChannels = Channel::where('name', $channelName)
-            ->orWhere('epg_key', $epgKey)
-            ->get();
-
-        foreach ($otherChannels as $otherChannel) {
-            if (!$otherChannel->epg_setting_id || $otherChannel->epg_setting_id === $this->epgSetting->id) {
-                $otherChannel->epg_key = $epgKey;
-                $otherChannel->save();
+            if (!$channel->epg_setting_id || $channel->epg_setting_id === $this->epgSetting->id) {
+                $channel->epg_key = $epgKey;
+                $channel->save();
             }
 
-            if (!$otherChannel->epg_setting_id) {
-                $otherChannel->epg_setting_id = $this->epgSetting->id;
-                $otherChannel->save();
+            if (!$channel->epg_setting_id) {
+                $channel->epg_setting_id = $this->epgSetting->id;
+                $channel->save();
             }
             $channel->epgSettings()->syncWithoutDetaching([$this->epgSetting->id]);
         }
 
-        return $channel;
+        return $channels;
     }
 
     protected function isEmpty(SimpleXMLElement $simpleXMLElement)
