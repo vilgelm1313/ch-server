@@ -151,24 +151,23 @@ class EpgParserService
 
         foreach ($channels as $channel) {
             if (!$channel->logo) {
-                continue;
-            }
-            try {
-                $logo = (string) $xml->icon->attributes()->src;
-                $file = file_get_contents($logo);
-                $path = 'public/channel-logo/' . $epgKey . '-' . $channel->id . '.png';
-                $fileName = storage_path('app/' . $path);
-                file_put_contents($fileName, $file);
-                $channel->logo = '/api/file/get?path=' . $path;
-                $channel->save();
+                try {
+                    $logo = (string) $xml->icon->attributes()->src;
+                    $file = file_get_contents($logo);
+                    $path = 'public/channel-logo/' . $epgKey . '-' . $channel->id . '.png';
+                    $fileName = storage_path('app/' . $path);
+                    file_put_contents($fileName, $file);
+                    $channel->logo = '/api/file/get?path=' . $path;
+                    $channel->save();
 
-                $this->logger->database([
-                    'type' => 'epg',
-                    'action' => 'logo',
-                    'value' => $channel->logo,
-                ]);
-            } catch (\Throwable $th) {
+                    $this->logger->database([
+                        'type' => 'epg',
+                        'action' => 'logo',
+                        'value' => $channel->logo,
+                    ]);
+                } catch (\Throwable $th) {
 
+                }
             }
             if (!$channel->epg_setting_id || $channel->epg_setting_id === $this->epgSetting->id) {
                 $channel->epg_key = $epgKey;
