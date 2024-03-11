@@ -22,6 +22,9 @@ class VideofileSyncer implements ServerSyncerContract
         foreach ($files as $videoFile) {
             $filename = Str::afterLast($videoFile->path, '/');
             $path = Str::beforeLast($videoFile->path, '/');
+            if (!$path) {
+                $path = 'video';
+            }
             $subtitles = [];
             if ($videoFile->imbd) {
                 $subtitles[] = 'IMBD: '. $videoFile->imbd;
