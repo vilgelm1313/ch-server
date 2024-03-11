@@ -22,7 +22,7 @@ class VideofileSyncer implements ServerSyncerContract
         foreach ($files as $videoFile) {
             $filename = Str::afterLast($videoFile->path, '/');
             $path = Str::beforeLast($videoFile->path, '/');
-            if (!$path) {
+            if (strpos($filename, '/') === false) {
                 $path = 'video';
             }
             $subtitles = [];
