@@ -29,7 +29,7 @@ class FileController extends ApiController
 
             $name .= '.' . $request->file('file')->getClientOriginalExtension();
             
-            $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), );
+            $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), $name);
         } else {
             $path = 'public/' . $request->type;
             $fileName = Storage::putFile($path, $request->file('file'));
