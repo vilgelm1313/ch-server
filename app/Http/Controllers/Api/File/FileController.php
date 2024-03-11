@@ -14,7 +14,7 @@ class FileController extends ApiController
             'file' => [
                 'required',
                 'file',
-                'mimetypes:video/avi,video/mpeg,video/quicktime,image/jpeg,image/png,image/jpg',
+                'mimetypes:video/avi,video/mpeg,video/mp4,video/quicktime,image/jpeg,image/png,image/jpg',
                 'max:4000000',
             ],
             'type' => 'required|string|in:video-file,channel-logo,video',
