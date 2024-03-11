@@ -22,7 +22,14 @@ class FileController extends ApiController
         ]);
 
         if ($request->type === 'video') {
-            $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), time() . '_' . $request->name);
+            $name = $request->name;
+            if (!$name) {
+                $name = time();
+            }
+
+            $name .= '.' . $request->file('file')->getClientOriginalExtension();
+            
+            $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), );
         } else {
             $path = 'public/' . $request->type;
             $fileName = Storage::putFile($path, $request->file('file'));
