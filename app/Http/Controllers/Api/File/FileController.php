@@ -18,10 +18,11 @@ class FileController extends ApiController
                 'max:2000000',
             ],
             'type' => 'required|string|in:video-file,channel-logo,video',
+            'name' => 'nullable|string',
         ]);
 
         if ($request->type === 'video') {
-            $fileName = 'test.mp4';
+            $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), time() . '_' . $request->name);
         } else {
             $path = 'public/' . $request->type;
             $fileName = Storage::putFile($path, $request->file('file'));
