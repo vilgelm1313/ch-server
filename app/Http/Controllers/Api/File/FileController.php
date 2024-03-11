@@ -11,12 +11,22 @@ class FileController extends ApiController
     public function upload(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required|file|image',
-            'type' => 'required|string|in:video-file,channel-logo',
+            'file' => [
+                'required',
+                'file',
+                'mimetypes:video/avi,video/mpeg,video/quicktime,image/jpeg,image/png,image/jpg',
+                'max:2000000',
+            ],
+            'type' => 'required|string|in:video-file,channel-logo,video',
         ]);
 
-        $path = 'public/' . $request->type;
-        $fileName = Storage::putFile($path, $request->file('file'));
+        if ($request->type === 'video') {
+            $fileName = 'test.mp4';
+        } else {
+            $path = 'public/' . $request->type;
+            $fileName = Storage::putFile($path, $request->file('file'));
+        }
+        
 
         if ($fileName) {
             return $this->success([
