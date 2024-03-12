@@ -7,6 +7,7 @@ use App\Models\EPG\Epg;
 use App\Models\Settings\EpgSetting;
 use App\Services\Log\LoggerService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use SimpleXMLElement;
 use XMLReader;
 
@@ -22,6 +23,8 @@ class EpgParserService
 
     public function parse()
     {
+        $now = Carbon::now()->format('Y-m-d_H:i:s');
+        Storage::putFileAs('saved-epg', file_get_contents($this->epgSetting->url), $now . '_' . $this->epgSetting->name . '.xml');
         $reader = new XMLReader();
         $reader->open($this->epgSetting->url);
         $this->epgSetting->channels()->sync([]);
@@ -33,9 +36,9 @@ class EpgParserService
             if ($reader->name == 'channel') {
                 $channels = $this->parseChannel($reader);
                 $this->channels[$reader->getAttribute('id')] = $channels;
-                foreach ($channels as $channel) {
-                    Epg::where('channel_id', $channel->id)->delete();
-                }
+                // foreach ($channels as $channel) {
+                //     Epg::where('channel_id', $channel->id)->delete();
+                // }
             } elseif ($reader->name == 'programme') {
                 $this->parseProgramme($reader);
             }
