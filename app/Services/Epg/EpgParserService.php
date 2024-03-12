@@ -15,6 +15,7 @@ class EpgParserService
 {
     protected LoggerService $logger;
     protected array $channels = [];
+    protected array $deletedChannels = [];
 
     public function __construct(protected EpgSetting $epgSetting)
     {
@@ -36,9 +37,6 @@ class EpgParserService
             if ($reader->name == 'channel') {
                 $channels = $this->parseChannel($reader);
                 $this->channels[$reader->getAttribute('id')] = $channels;
-                // foreach ($channels as $channel) {
-                //     Epg::where('channel_id', $channel->id)->delete();
-                // }
             } elseif ($reader->name == 'programme') {
                 $this->parseProgramme($reader);
             }
@@ -95,7 +93,13 @@ class EpgParserService
                 continue;
             }
             $channels = $this->channels[$reader->getAttribute('channel')];
-
+            foreach ($channels as $channel) {
+                if (empty($this->deletedChannels[$channel->id])) {
+                    Epg::where('channel_id', $channel->id)->delete();
+                    $this->deletedChannels[$channel->id] = true;
+                }
+            }
+            
             foreach ($channels as $channel) {
                 if ($channel->epg_setting_id && $channel->epg_setting_id !== $this->epgSetting->id) {
                     continue;
