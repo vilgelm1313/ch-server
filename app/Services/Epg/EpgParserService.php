@@ -23,8 +23,8 @@ class EpgParserService
 
     public function parse()
     {
-        $now = Carbon::now()->format('Y-m-d_H:i:s');
-        Storage::putFileAs('saved-epg', file_get_contents($this->epgSetting->url), $now . '_' . $this->epgSetting->name . '.xml');
+        $now = Carbon::now()->format('Y-m-d');
+        file_put_contents('storage/app/saved-epg/' . $now . '/', $now . '_' . $this->epgSetting->name . '.xml', file_get_contents($this->epgSetting->url));
         $reader = new XMLReader();
         $reader->open($this->epgSetting->url);
         $this->epgSetting->channels()->sync([]);
