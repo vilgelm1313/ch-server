@@ -40,7 +40,7 @@ class FilterService
             }
         } elseif ($filter['type'] === 'list') {
             if (!is_array($value)) {
-                $value = [$value];
+                $value = explode(',', $value);
             }
             $in = [];
             $notIn = [];
