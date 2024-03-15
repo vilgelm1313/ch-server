@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\EpgCreateCommand;
 use App\Console\Commands\EpgParseCommand;
+use App\Console\Commands\RemoveOldEpgFilesCommand;
 use App\Console\Commands\RemoveOldVideoFilesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,6 +27,10 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(RemoveOldVideoFilesCommand::class)
             ->dailyAt('22:00')
+            ->withoutOverlapping();
+
+        $schedule->command(RemoveOldEpgFilesCommand::class)
+            ->dailyAt('22:30')
             ->withoutOverlapping();
     }
 
