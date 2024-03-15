@@ -55,6 +55,10 @@ class Channel extends BaseModel
         'is_active' => [
             'type' => 'equal',
         ],
+        'epg_source' => [
+            'type' => 'list',
+            'field' => 'epg_setting_id'
+        ],
     ];
 
     protected $fillable = [
