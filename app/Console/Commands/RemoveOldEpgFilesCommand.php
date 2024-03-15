@@ -13,10 +13,10 @@ class RemoveOldEpgFilesCommand extends Command
 
     public function handle()
     {
-        $files = collect(Storage::allFiles('app/epg'));
+        $files = collect(Storage::allFiles('epg'));
         $old = Carbon::now()->subDays(10);
         foreach ($files as $file) {
-            $lastModified =  Storage::lastModified($file);
+            $lastModified = Storage::lastModified($file);
             $lastModified = Carbon::parse($lastModified);
             if ($lastModified->lt($old)) {
                 Storage::delete($file);
