@@ -6,6 +6,7 @@ use App\Models\BaseModel;
 use App\Models\VideoFiles\VideoFile;
 use App\Repositories\BaseRepository;
 use App\Repositories\Traits\SyncServers;
+use Illuminate\Support\Facades\Storage;
 
 class VideoFileRepository extends BaseRepository
 {
@@ -34,5 +35,17 @@ class VideoFileRepository extends BaseRepository
             ->where('is_active', true)
             ->orderBy('title')
             ->get();
+    }
+
+    public function destroy(int $id): bool
+    {
+        $video = VideoFile::findOrFail($id);
+        $deleted = parent::destroy($id);
+
+        if ($deleted) {
+            Storage::disk('ftp')->delete($video->path);
+        }
+
+        return $deleted;
     }
 }
