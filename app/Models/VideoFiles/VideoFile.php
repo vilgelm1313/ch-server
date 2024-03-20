@@ -69,7 +69,7 @@ class VideoFile extends BaseModel
 
     public function syncLogo(): Attribute
     {
-        $logo = str_replace('https://plati.one/logo/', '', $this->logo ?? '');
+        $logo = str_replace('https://plati.one/logo/', '', $this->poster ?? '');
         $logo = str_replace('/api/file/get?path=', '', $logo ?? '');
         $logo = str_replace('public/', '', $logo ?? '');
 
