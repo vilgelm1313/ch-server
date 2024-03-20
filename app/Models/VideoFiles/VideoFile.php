@@ -4,6 +4,7 @@ namespace App\Models\VideoFiles;
 
 use App\Models\BaseModel;
 use App\Models\Settings\Server;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -63,5 +64,15 @@ class VideoFile extends BaseModel
         return $this->belongsToMany(Server::class, 'video_file_server')
             ->withPivot('synced_at')
             ->as('synced');
+    }
+
+
+    public function syncLogo(): Attribute
+    {
+        $logo = str_replace('https://plati.one/logo/', '', $this->logo ?? '');
+        $logo = str_replace('/api/file/get?path=', '', $logo ?? '');
+        $logo = str_replace('public/', '', $logo ?? '');
+
+        return new Attribute(fn () => $logo);
     }
 }

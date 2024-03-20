@@ -58,7 +58,7 @@ class VideofileSyncer implements ServerSyncerContract
             $data[$filename] = [
                 'filename' => $filename,
                 'path' => $path,
-                'poster' => 'plati.one/logo' . $videoFile->poster,
+                'poster' => 'plati.one/logo' . $videoFile->sync_logo,
                 'title' => implode(' | ', $title),
                 'sub-title' => $subtitle,
                 'description' => $videoFile->description,
