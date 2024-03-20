@@ -32,12 +32,18 @@ class KinopoiskUnofficialService
         $director = [];
         $actors = [];
         foreach ($staff as $staffMember) {
-            if ($staffMember['professionKey'] === 'DIRECTOR') {
+            if ($staffMember['professionKey'] === 'DIRECTOR' && $staffMember['nameRu']) {
                 $director[] = $staffMember['nameRu'];
-            } elseif ($staffMember['professionKey'] === 'ACTOR') {
+            } elseif ($staffMember['professionKey'] === 'ACTOR' && $staffMember['nameRu']) {
                 $actors[] = $staffMember['nameRu'];
             }
         }
+
+        
+        $file = file_get_contents($movie['posterUrlPreview']);
+        $path = 'public/channel-logo/' . $id . '.png';
+        $fileName = storage_path('app/' . $path);
+        file_put_contents($fileName, $file);
 
         return [
             'title' => $movie['nameRu'],
@@ -45,7 +51,7 @@ class KinopoiskUnofficialService
             'imbd' => $movie['ratingImdb'],
             'kinopoisk' => $movie['ratingKinopoisk'],
             'year' => '' . $movie['year'],
-            'poster' => $movie['posterUrlPreview'],
+            'poster' => '/api/file/get?path=' . $path,
             'description' => $movie['description'],
             'country' => implode(', ', $countries),
             'director' => implode(', ', $director),

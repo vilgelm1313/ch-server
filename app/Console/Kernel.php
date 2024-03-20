@@ -24,6 +24,19 @@ class Kernel extends ConsoleKernel
             ->after(function() {
                 $this->call(EpgCreateCommand::class);
             });
+        $schedule->command(EpgParseCommand::class, ['--force'])
+            ->dailyAt('03:00')
+            ->withoutOverlapping()
+            ->after(function() {
+                $this->call(EpgCreateCommand::class);
+            });
+        
+        $schedule->command(EpgParseCommand::class, ['--force'])
+            ->dailyAt('19:00')
+            ->withoutOverlapping()
+            ->after(function() {
+                $this->call(EpgCreateCommand::class);
+            });
 
         $schedule->command(RemoveOldVideoFilesCommand::class)
             ->dailyAt('22:00')
