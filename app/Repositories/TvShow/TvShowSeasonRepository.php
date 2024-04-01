@@ -48,15 +48,19 @@ class TvShowSeasonRepository extends BaseRepository
         $model = $this->show($id);
         $episodes = $model->episodes;
         $oldPathes = [];
-        foreach ($episodes as $episode) {
-            $oldPathes[] = $episode['path'];
+        if ($episodes) {
+            foreach ($episodes as $episode) {
+                $oldPathes[] = $episode['path'];
+            }
         }
         $model = parent::update($id, $data);
 
         $newEpisodes = $model->episodes;
         $newPathes = [];
-        foreach ($newEpisodes as $episode) {
-            $newPathes[] = $episode['path'];
+        if ($newEpisodes) {
+            foreach ($newEpisodes as $episode) {
+                $newPathes[] = $episode['path'];
+            }
         }
 
         foreach ($oldPathes as $path) {
