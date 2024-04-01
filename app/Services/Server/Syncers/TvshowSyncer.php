@@ -56,6 +56,6 @@ class TvshowSyncer implements ServerSyncerContract
 
     public function getName(): string
     {
-        return '';
+        return 'serials';
     }
 }
