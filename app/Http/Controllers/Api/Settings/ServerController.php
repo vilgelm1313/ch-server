@@ -25,7 +25,7 @@ class ServerController extends BaseController
     public function addRelations(Request $request, Server $server)
     {
         $this->validate($request, [
-            'relation' => 'required|in:channels,categories,countries,videoFiles',
+            'relation' => 'required|in:channels,categories,countries,videoFiles,tvShows',
             'ids' => 'array|required',
         ]);
 

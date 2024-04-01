@@ -21,6 +21,7 @@ class ServerRepository extends BaseRepository
             'countries',
             'categories',
             'videoFiles',
+            'tvShows',
         ]);
 
         return $server;

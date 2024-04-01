@@ -4,6 +4,7 @@ namespace App\Models\Settings;
 
 use App\Models\BaseModel;
 use App\Models\Channels\Channel;
+use App\Models\TvShow\TvShow;
 use App\Models\VideoFiles\VideoFile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -57,6 +58,13 @@ class Server extends BaseModel
     public function videoFiles()
     {
         return $this->belongsToMany(VideoFile::class, 'video_file_server')
+            ->withPivot('synced_at')
+            ->as('synced');
+    }
+
+    public function tvShows()
+    {
+        return $this->belongsToMany(TvShow::class, 'tv_show_server')
             ->withPivot('synced_at')
             ->as('synced');
     }
