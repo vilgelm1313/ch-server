@@ -50,8 +50,10 @@ class TvShowRepository extends BaseRepository
              * @var TvShowSeason $season
              */
             foreach($show->seasons as $season) {
-                foreach($season->episodes as $episode) {
-                    Storage::disk('ftp')->delete($episode['path']);
+                if ($season->episodes) {
+                    foreach($season->episodes as $episode) {
+                        Storage::disk('ftp')->delete($episode['path']);
+                    }
                 }
             }
         }
