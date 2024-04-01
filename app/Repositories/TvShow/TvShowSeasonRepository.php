@@ -34,7 +34,7 @@ class TvShowSeasonRepository extends BaseRepository
         $season = TvShowSeason::findOrFail($id);
         $deleted = parent::destroy($id);
 
-        if ($deleted) {
+        if ($deleted && $season->episodes) {
             foreach($season->episodes as $episode) {
                 Storage::disk('ftp')->delete($episode['path']);
             }
