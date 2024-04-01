@@ -24,7 +24,7 @@ class TvshowSyncer implements ServerSyncerContract
          */
         foreach ($shows as $show) {
             $title = [];
-            $$filename = $show->title;
+            $filename = $show->title;
             $title[] = $show->title;
             if ($show->original_title) {
                 $title[] = $show->original_title;
