@@ -27,7 +27,7 @@ class TvShowSeasonController extends BaseController
 
     public function addSeason(int $showId, TvShowSeasonRequest $request)
     {
-        $response = $this->getRepository()->addSeason($showId, $request->name);
+        $response = $this->getRepository()->addSeason($showId, $request->title);
 
         return $this->success($response);
     }
