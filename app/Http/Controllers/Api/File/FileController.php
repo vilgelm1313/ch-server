@@ -18,7 +18,7 @@ class FileController extends ApiController
                 'mimetypes:video/avi,video/mpeg,video/mp4,video/quicktime,image/jpeg,image/png,image/jpg',
                 'max:4000000',
             ],
-            'type' => 'required|string|in:video-file,channel-logo,video',
+            'type' => 'required|string|in:video-file,channel-logo,video,season',
             'name' => 'nullable|string',
         ]);
 
@@ -35,7 +35,17 @@ class FileController extends ApiController
             $name .= '.' . $request->file('file')->getClientOriginalExtension();
             
             $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), $name);
-        } else {
+        } else if ($request->type === 'season') {
+            if ($request->file('file')->getClientMimeType() !== 'video/mp4') {
+                throw ValidationException::withMessages([
+                    'file' => ['The provided file is not a video file.'],
+                ]);
+            }
+            $name = $request->name;
+            $name .= microtime(true) . '.' . $request->file('file')->getClientOriginalExtension();
+            
+            $fileName = Storage::disk('ftp')->putFileAs('', $request->file('file'), $name);
+        }else {
             $this->validate($request, [
                 'file' => [
                     'required',

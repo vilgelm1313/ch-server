@@ -11,7 +11,10 @@ use App\Http\Controllers\Api\Settings\CountryController;
 use App\Http\Controllers\Api\Settings\EpgSettingController;
 use App\Http\Controllers\Api\Settings\ServerController;
 use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\TvShow\TvShowController;
+use App\Http\Controllers\Api\TvShow\TvShowSeasonController;
 use App\Http\Controllers\Api\VideoFiles\VideoFileController;
+use App\Models\TvShow\TvShowSeason;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
         'videofile' => VideoFileController::class,
         'channel' => ChannelController::class,
         'category' => CategoryController::class,
+        'tvshow' => TvShowController::class,
+        'season' => TvShowSeasonController::class,
     ];
 
     Route::get('/videofile/kinopoisk/info', [VideoFileController::class, 'getMovieInfoFromKinopoisk']);
@@ -59,4 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/category/{category}/channels', [CategoryController::class, 'setChannelsPositions']);
     Route::get('/channel/{channel}/epg', [EpgController::class, 'channelEpg']);
+
+    Route::get('/tvshow/{show}/season', [TvShowSeasonController::class, 'view']);
+    Route::post('/tvshow/{show}/season', [TvShowSeasonController::class, 'addSeason']);
 });

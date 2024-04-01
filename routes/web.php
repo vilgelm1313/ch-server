@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $epgParserService = new EpgParserService('t');
-    $epgParserService->parse();
+    
 
     return 'work in progress...';
 });
