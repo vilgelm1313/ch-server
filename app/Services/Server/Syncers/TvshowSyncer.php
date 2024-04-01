@@ -33,7 +33,10 @@ class TvshowSyncer implements ServerSyncerContract
 
             foreach ($show->seasons as $season) {
                 if ($season->episodes) {
-                    $episodes = array_merge($episodes, $season->episodes);
+                    foreach ($season->episodes as $episode) {
+                        $episode['path'] = '/video/' . $episode['path'];
+                        $episodes[] = $episode;
+                    }
                 }
             }
             $data[$filename] = [
