@@ -4,6 +4,7 @@ namespace Tests\Feature\Iptv;
 
 use App\Models\Iptv\StreamServer;
 use App\Models\Iptv\Tariff;
+use App\Models\Iptv\VideoServer;
 use Tests\Feature\BaseController;
 
 class TariffControllerTest extends BaseController
@@ -17,6 +18,7 @@ class TariffControllerTest extends BaseController
             'name' => 'test',
             'is_active' => true,
             'price' => 100,
+            'video_server_id' => VideoServer::factory()->create()->id,
         ];
     }
 }

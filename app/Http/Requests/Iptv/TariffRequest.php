@@ -12,6 +12,7 @@ class TariffRequest extends BaseRequest
             'name' => 'required|string|max:255',
             'is_active' => 'required|boolean',
             'price' => 'required|numeric|min:0',
+            'video_server_id' => 'required|exists:video_servers,id',
         ];
 
         return $rules;

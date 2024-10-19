@@ -11,4 +11,11 @@ class TariffRepository extends BaseRepository
     {
         return Tariff::class;
     }
+
+    protected function getWith(): array
+    {
+        return [
+            'videoServer'
+        ];
+    }
 }

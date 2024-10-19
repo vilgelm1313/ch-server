@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $mail_user
  * @property string $mail_password
  * @property string $timezone
+ * @property string $apk_version
+ * @property string $apk_changes
+ * @property string $apk_src
  * @property boolean $mail_encryption
  * @property bool $is_active
  */
@@ -41,6 +44,9 @@ class VideoServer extends BaseModel
         'is_maintenence',
         'token_lifetime',
         'mail_encryption',
+        'apk_version',
+        'apk_src',
+        'apk_changes',
     ];
 
     protected $casts = [
