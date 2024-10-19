@@ -9,8 +9,8 @@ class NewsRequest extends BaseRequest
     public function rules(): array
     {
         $rules = [
-            'name' => 'required|string|max:255',
-            'index' => 'required|string',
+            'title' => 'required|string|max:255',
+            'text' => 'required|string',
             'is_active' => 'required|boolean',
         ];
 
