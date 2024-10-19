@@ -17,15 +17,18 @@ class AuthController extends ApiController
             'password' => 'required|string|max:255',
         ]);
 
-        $success = $authService->login($request->username, $request->password);
+        $user = $authService->login($request->username, $request->password);
 
-        if (!$success) {
+        if (!$user) {
             throw ValidationException::withMessages([
                 'username' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        return $this->success();
+        return $this->success([
+            'is_admin' => $user->is_admin,
+            'username' => $user->username,
+        ]);
     }
 
     public function logout(AuthService $authService): JsonResponse

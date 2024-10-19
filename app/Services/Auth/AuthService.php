@@ -3,18 +3,18 @@
 namespace App\Services\Auth;
 
 use App\Events\Auth\AuthEvent;
+use App\Models\User\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class AuthService
 {
-    public function login(string $username, string $password): bool
+    public function login(string $username, string $password): ?User
     {
 
         if ($this->isBanned()) {
             AuthEvent::dispatch('attempt', 'banned ' . $username);
-
-            return false;
+            return null;
         } else {
             AuthEvent::dispatch('attempt', $username);
         }
@@ -24,18 +24,18 @@ class AuthService
         ], true);
 
         if (!$success) {
-            return false;
+            return null;
         }
 
         $user = Auth::user();
 
         if (!$user->is_active) {
-            return false;
+            return null;
         }
 
         AuthEvent::dispatch('login');
 
-        return true;
+        return $user;
     }
 
     public function logout()
@@ -54,6 +54,6 @@ class AuthService
             return false;
         }
 
-        return true;
+        return false;
     }
 }

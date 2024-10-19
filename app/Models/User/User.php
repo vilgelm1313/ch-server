@@ -16,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $username
  * @property string $password
  * @property bool $is_active
+ * @property bool $is_admin
  * @property string $comment
  */
 class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
@@ -36,6 +37,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
         'is_active',
         'password',
         'comment',
+        'is_admin',
     ];
     protected $hidden = [
         'password',
@@ -44,5 +46,6 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     protected $casts = [
         'password' => 'hashed',
         'is_active' => 'boolean',
+        'is_admin' => 'boolean',
     ];
 }
