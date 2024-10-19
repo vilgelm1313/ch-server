@@ -10,4 +10,5 @@ use Illuminate\Database\Eloquent\Model;
 class BaseModel extends Model
 {
     protected $perPage = 10;
+    public const SORT_FIELDS = [];
 }

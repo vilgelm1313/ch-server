@@ -45,7 +45,9 @@ abstract class BaseRepository
          * @var Builder
          */
         $builder = $filterService->addFilters($builder, $this->getClass(), $filters);
-        if ($this->getDefaultOrderColumn()) {
+        if (isset($filters['sort']) && isset( $filters['order']) && in_array($filters['sort'], $this->getClass()::SORT_FIELDS)) {
+            $builder->orderBy($filters['sort'], $filters['order'] === 'descend' ? 'desc' : 'asc');
+        } else if ($this->getDefaultOrderColumn()) {
             $builder->orderBy($this->getDefaultOrderColumn(), $this->getDefaultOrderDirection());
         }
         $with = $this->getWith();

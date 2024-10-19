@@ -61,6 +61,10 @@ class Channel extends BaseModel
         ],
     ];
 
+    public const SORT_FIELDS = [
+        'views'
+    ];
+
     protected $fillable = [
         'name',
         'comment',
