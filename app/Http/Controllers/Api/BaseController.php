@@ -16,7 +16,7 @@ abstract class BaseController extends ApiController
     public function index(Request $request)
     {
         $this->validate($request, [
-            'per_page' => 'nullable|in:10,25,50,100',
+            'per_page' => 'nullable|in:50,100,200,300,500,1000',
         ]);
 
         $models = $this->getRepository()->index($request->per_page, $request->all());
