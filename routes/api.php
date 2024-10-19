@@ -5,6 +5,12 @@ use App\Http\Controllers\Api\Channels\ChannelController;
 use App\Http\Controllers\Api\Epg\EpgController;
 use App\Http\Controllers\Api\File\FileController;
 use App\Http\Controllers\Api\History\HistoryController;
+use App\Http\Controllers\Api\Iptv\BanDomainController;
+use App\Http\Controllers\Api\Iptv\BanIpController;
+use App\Http\Controllers\Api\Iptv\NewsController;
+use App\Http\Controllers\Api\Iptv\StreamServerController;
+use App\Http\Controllers\Api\Iptv\TariffController;
+use App\Http\Controllers\Api\Iptv\VideoServerController;
 use App\Http\Controllers\Api\Settings\CategoryController;
 use App\Http\Controllers\Api\Settings\ConfigurationController;
 use App\Http\Controllers\Api\Settings\CountryController;
@@ -14,6 +20,7 @@ use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\TvShow\TvShowController;
 use App\Http\Controllers\Api\TvShow\TvShowSeasonController;
 use App\Http\Controllers\Api\VideoFiles\VideoFileController;
+use App\Models\Iptv\VideoServer;
 use App\Models\TvShow\TvShowSeason;
 use Illuminate\Support\Facades\Route;
 
@@ -31,31 +38,82 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout']);
-    Route::get('/history', [HistoryController::class, 'index']);
-    Route::get('/epg', [EpgController::class, 'index']);
-    Route::apiResource('configuration', ConfigurationController::class);
+    Route::get('/history', [HistoryController::class, 'index'])->middleware('can:admin');
+    Route::get('/epg', [EpgController::class, 'index'])->middleware('can:admin');
+    Route::apiResource('configuration', ConfigurationController::class)->middleware('can:admin');
     Route::post('file/upload', [FileController::class, 'upload']);
     Route::get('file/get', [FileController::class, 'getImage']);
-    Route::post('epgsetting/{epg}/parse', [EpgSettingController::class, 'parse']);
+    Route::post('epgsetting/{epg}/parse', [EpgSettingController::class, 'parse'])->middleware('can:admin');
 
     $activation = [
-        'user' => UserController::class,
-        'server' => ServerController::class,
-        'epgsetting' => EpgSettingController::class,
-        'country' => CountryController::class,
-        'videofile' => VideoFileController::class,
-        'channel' => ChannelController::class,
-        'category' => CategoryController::class,
-        'tvshow' => TvShowController::class,
-        'season' => TvShowSeasonController::class,
+        'user' => [
+            'controller' => UserController::class,
+            'ability' => 'admin'
+        ],
+        'epgsetting' => [
+            'controller' => EpgSettingController::class,
+            'ability' => 'admin'
+        ],
+        'server' => [
+            'controller' => ServerController::class,
+            'ability' => ''
+        ],
+        'country' => [
+            'controller' => CountryController::class,
+            'ability' => ''
+        ],
+        'videofile' => [
+            'controller' => VideoFileController::class,
+            'ability' => ''
+        ],
+        'channel' => [
+            'controller' => ChannelController::class,
+            'ability' => ''
+        ],
+        'category' => [
+            'controller' => CategoryController::class,
+            'ability' => ''
+        ],
+        'tvshow' => [
+            'controller' => TvShowController::class,
+            'ability' => ''
+        ],
+        'season' => [
+            'controller' => TvShowSeasonController::class,
+            'ability' => ''
+        ],
+        'news' => [
+            'controller' => NewsController::class,
+            'ability' => 'admin'
+        ],
+        'banip' => [
+            'controller' => BanIpController::class,
+            'ability' => 'admin'
+        ],
+        'bandomain' => [
+            'controller' => BanDomainController::class,
+            'ability' => 'admin'
+        ],
+        'tariff' => [
+            'controller' => TariffController::class,
+            'ability' => 'admin'
+        ],
+        'videoserver' => [
+            'controller' => VideoServerController::class,
+            'ability' => 'admin'
+        ],
+        'streamserver' => [
+            'controller' => StreamServerController::class,
+            'ability' => 'admin'
+        ],
     ];
 
     Route::get('/videofile/kinopoisk/info', [VideoFileController::class, 'getMovieInfoFromKinopoisk']);
     foreach ($activation as $key => $value) {
-        Route::get("{$key}/all", [$value, 'all']);
-        Route::apiResource($key, $value);
-        Route::post("{$key}/{{$key}}/activate", [$value, 'activate']);
-        Route::post("{$key}/{{$key}}/deactivate", [$value, 'deactivate']);
+        Route::get("{$key}/all", [$value['controller'], 'all']);
+        Route::apiResource($key, $value['controller'])->middleware('can:'. $value['ability']);
+        Route::post("{$key}/{{$key}}/activate", [$value['controller'], 'activate'])->middleware('can:'. $value['ability']);
+        Route::post("{$key}/{{$key}}/deactivate", [$value['controller'], 'deactivate'])->middleware('can:'. $value['ability']);
     }
 
     Route::post('/server/sync/all', [ServerController::class, 'syncAll']);

@@ -42,7 +42,7 @@ class VideoFileRepository extends BaseRepository
         $video = VideoFile::findOrFail($id);
         $deleted = parent::destroy($id);
 
-        if ($deleted) {
+        if ($deleted && config('app.env') !== 'testing') {
             Storage::disk('ftp')->delete($video->path);
         }
 

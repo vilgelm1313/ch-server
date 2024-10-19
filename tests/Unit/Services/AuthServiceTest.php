@@ -27,7 +27,7 @@ class AuthServiceTest extends TestCase
     public function testFailLogin()
     {
         $success = $this->authService->login($this->user->username, 'badpass');
-        $this->assertFalse($success);
+        $this->assertNull($success);
         Event::assertDispatched(AuthEvent::class, function (AuthEvent $event) {
             return $event->action === 'attempt';
         });
@@ -35,8 +35,8 @@ class AuthServiceTest extends TestCase
 
     public function testSuccessLogin()
     {
-        $success = $this->authService->login($this->user->username, 'pass');
-        $this->assertTrue($success);
+        $user = $this->authService->login($this->user->username, 'pass');
+        $this->assertTrue($user->id === $this->user->id);
         Event::assertDispatched(AuthEvent::class, function (AuthEvent $event) {
             return $event->action === 'login';
         });
@@ -47,7 +47,7 @@ class AuthServiceTest extends TestCase
         $this->user->is_active = false;
         $this->user->save();
         $success = $this->authService->login($this->user->username, 'pass');
-        $this->assertFalse($success);
+        $this->assertNull($success);
 
         Event::assertDispatched(AuthEvent::class, function (AuthEvent $event) {
             return $event->action === 'attempt';
