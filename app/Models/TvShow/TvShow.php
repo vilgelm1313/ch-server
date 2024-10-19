@@ -32,6 +32,10 @@ class TvShow extends BaseModel
         'is_active',
     ];
 
+    public const SORT_FIELDS = [
+        'views'
+    ];
+
     protected $casts = [
         'is_active' => 'boolean',
     ];

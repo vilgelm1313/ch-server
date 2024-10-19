@@ -50,6 +50,10 @@ class VideoFile extends BaseModel
         'genres',
     ];
 
+    public const SORT_FIELDS = [
+        'views'
+    ];
+
     const FILTERS = [
         'title' => ['type' => 'string'],
     ];
