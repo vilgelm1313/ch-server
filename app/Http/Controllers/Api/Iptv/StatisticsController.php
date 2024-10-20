@@ -19,4 +19,11 @@ class StatisticsController extends ApiController
 
         return $this->success();
     }
+
+    public function clearChannelsStatistics(StatisticsService $statisticsService)
+    {
+        $statisticsService->clearChannelsStatistics();
+
+        return $this->success();
+    }
 }

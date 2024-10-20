@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\History\HistoryController;
 use App\Http\Controllers\Api\Iptv\BanDomainController;
 use App\Http\Controllers\Api\Iptv\BanIpController;
 use App\Http\Controllers\Api\Iptv\NewsController;
+use App\Http\Controllers\Api\Iptv\StatisticsController;
 use App\Http\Controllers\Api\Iptv\StreamServerController;
 use App\Http\Controllers\Api\Iptv\TariffController;
 use App\Http\Controllers\Api\Iptv\VideoServerController;
@@ -125,4 +126,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/tvshow/{show}/season', [TvShowSeasonController::class, 'view']);
     Route::post('/tvshow/{show}/season', [TvShowSeasonController::class, 'addSeason']);
+
+    Route::post('/channel/statistics/clear', [StatisticsController::class, 'clearChannelsStatistics']);
 });

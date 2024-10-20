@@ -33,4 +33,13 @@ class StatisticsService
         }
         $query->update($params);
     }
+
+    public function clearChannelsStatistics()
+    {
+        Channel::where('id', '>', 0)->update([
+            'watch_time' => 0,
+            'views' => 0,
+            'last_viewed_at' => null,
+        ]);
+    }
 }
