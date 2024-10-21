@@ -4,7 +4,7 @@ namespace App\Http\Requests\Iptv;
 
 use App\Http\Requests\BaseRequest;
 
-class BanpDomainRequest extends BaseRequest
+class BanDomainRequest extends BaseRequest
 {
     public function rules(): array
     {

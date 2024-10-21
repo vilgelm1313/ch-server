@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\File\FileController;
 use App\Http\Controllers\Api\History\HistoryController;
 use App\Http\Controllers\Api\Iptv\BanDomainController;
 use App\Http\Controllers\Api\Iptv\BanIpController;
+use App\Http\Controllers\Api\Iptv\DealerController;
 use App\Http\Controllers\Api\Iptv\NewsController;
 use App\Http\Controllers\Api\Iptv\StatisticsController;
 use App\Http\Controllers\Api\Iptv\StreamServerController;
@@ -107,6 +108,10 @@ Route::middleware('auth:sanctum')->group(function () {
             'controller' => StreamServerController::class,
             'ability' => 'admin'
         ],
+        'dealer' => [
+            'controller' => DealerController::class,
+            'ability' => 'admin'
+        ],
     ];
 
     Route::get('/videofile/kinopoisk/info', [VideoFileController::class, 'getMovieInfoFromKinopoisk']);
@@ -128,4 +133,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tvshow/{show}/season', [TvShowSeasonController::class, 'addSeason']);
 
     Route::post('/channel/statistics/clear', [StatisticsController::class, 'clearChannelsStatistics']);
+
+    Route::post('/dealer/{dealer}/amount', [DealerController::class, 'addAmount']);
+    Route::get('/dealer/{dealer}/invoice', [DealerController::class, 'invoices']);
 });

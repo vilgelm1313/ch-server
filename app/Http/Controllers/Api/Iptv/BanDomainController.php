@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Iptv;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Requests\Iptv\BanpDomainRequest;
+use App\Http\Requests\Iptv\BanDomainRequest;
 use App\Repositories\Iptv\BanDomainRepository;
 
 class BanDomainController extends BaseController
@@ -15,6 +15,6 @@ class BanDomainController extends BaseController
 
     public function getRequestClass(): string
     {
-        return BanpDomainRequest::class;
+        return BanDomainRequest::class;
     }
 }
