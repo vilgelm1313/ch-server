@@ -22,7 +22,7 @@ class DealerController extends BaseController
     public function addAmount(Request $request, int $dealer)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:0.01',
+            'amount' => 'required|numeric',
         ]);
 
         $dealer = $this->getRepository()->addAmount($dealer, $request->amount);
