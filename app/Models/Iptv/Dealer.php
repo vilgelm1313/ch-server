@@ -39,6 +39,10 @@ class Dealer extends BaseModel
         'video_server_id',
     ];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
     public function videoServer(): BelongsTo
     {
         return $this->belongsTo(VideoServer::class);
